@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "upgxjRdk5aU=",
+  "dgSpecHash": "39d7rvIZgHA=",
   "success": true,
-  "projectFilePath": "D:\\Onedrive\\OneDrive - Università di Salerno\\University\\IS\\MeerKat\\ServerBackend\\ServerBackend.csproj",
+  "projectFilePath": "C:\\Users\\power\\RiderProjects\\MeerKat\\ServerBackend\\ServerBackend.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Greenylie\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.1\\microsoft.aspnetcore.openapi.9.0.1.nupkg.sha512",
-    "C:\\Users\\Greenylie\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+    "C:\\Users\\power\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.1\\microsoft.aspnetcore.openapi.9.0.1.nupkg.sha512",
+    "C:\\Users\\power\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
   ],
   "logs": []
 }

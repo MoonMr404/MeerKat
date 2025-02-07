@@ -3,7 +3,11 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="ClientAvalonia/App.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
+        <entry key="ClientAvalonia/Assets/Icons.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/MainWindow.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
+        <entry key="ClientAvalonia/Views/TeamsView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
+        <entry key="ClientAvalonia/Views/UserView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
       </map>
     </option>
   </component>

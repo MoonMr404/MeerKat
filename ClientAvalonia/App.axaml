@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="ClientAvalonia.App"
              xmlns:local="using:ClientAvalonia"
-             RequestedThemeVariant="Default">
+             RequestedThemeVariant="Dark">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
@@ -10,6 +10,11 @@
     </Application.DataTemplates>
   
     <Application.Styles>
-        <FluentTheme />
+        <FluentTheme>
+            <StyleInclude Source="avares://ClientAvalonia/Assets/Icons.axaml"> </StyleInclude>
+            <FluentTheme.Palettes>
+                <ColorPaletteResources x:Key="Dark" Accent="Orchid" RegionColor="Black" ErrorText="Yellow" />
+            </FluentTheme.Palettes>
+        </FluentTheme>
     </Application.Styles>
 </Application>

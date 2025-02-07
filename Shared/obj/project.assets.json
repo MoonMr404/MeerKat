@@ -8,19 +8,19 @@
     "net9.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Greenylie\\.nuget\\packages\\": {}
+    "C:\\Users\\power\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Onedrive\\OneDrive - Università di Salerno\\University\\IS\\MeerKat\\Shared\\Shared.csproj",
+      "projectUniqueName": "C:\\Users\\power\\RiderProjects\\MeerKat\\Shared\\Shared.csproj",
       "projectName": "Shared",
-      "projectPath": "D:\\Onedrive\\OneDrive - Università di Salerno\\University\\IS\\MeerKat\\Shared\\Shared.csproj",
-      "packagesPath": "C:\\Users\\Greenylie\\.nuget\\packages\\",
-      "outputPath": "D:\\Onedrive\\OneDrive - Università di Salerno\\University\\IS\\MeerKat\\Shared\\obj\\",
+      "projectPath": "C:\\Users\\power\\RiderProjects\\MeerKat\\Shared\\Shared.csproj",
+      "packagesPath": "C:\\Users\\power\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\power\\RiderProjects\\MeerKat\\Shared\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "D:\\Appdata\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\power\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -42,7 +42,7 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "direct"
+        "auditMode": "all"
       },
       "SdkAnalysisLevel": "9.0.100"
     },
@@ -65,7 +65,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\power\\.dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
