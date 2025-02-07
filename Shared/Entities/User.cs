@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Shared.Utils;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 
-namespace Shared;
+namespace Shared.Entities;
 
 public class User
 {
@@ -15,6 +15,17 @@ public class User
     private string _hashedPassword = null!;
     private DateTime _dataNascita;
     private byte[] _immagine;
+
+    public User(string nome, string cognome, string email, string password, byte[] immagine, DateTime dataNascita)
+    {
+        Id = Guid.NewGuid();
+        Nome = nome;
+        Cognome = cognome;
+        Email = email;
+        Password = password;
+        Immagine = immagine;
+        DataNascita = dataNascita;
+    }
 
     public string Nome 
     { 
@@ -64,7 +75,7 @@ public class User
             {
                 throw new ArgumentException("La password deve essere almeno di 8 caratteri.");
             }
-            _hashedPassword = HashPassword(value);
+            _hashedPassword = SecretHasher.Hash(value);
         } 
     }
 
@@ -134,11 +145,5 @@ public class User
         {
             return false;
         }
-    }
-
-    private string HashPassword(string password)
-    {
-        // TODO: Implement password hashing logic
-        return null;
     }
 }
