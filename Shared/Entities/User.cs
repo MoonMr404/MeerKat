@@ -1,6 +1,4 @@
 ﻿using Shared.Utils;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Processing;
 
 namespace Shared.Entities;
 
@@ -9,47 +7,48 @@ public class User
     public Guid Id { get; private set; }
     
     // = null! è utilizzato per silenziare i warning, dato che che il setter si occupa di validare.
-    private string _nome = null!;
-    private string _cognome = null!;
+    private string _name = null!;
+    private string _surname = null!;
     private string _email = null!;
     private string _hashedPassword = null!;
-    private DateTime _dataNascita;
-    private byte[] _immagine;
+    private DateOnly _birthDate;
+    private byte[]? _image;
 
-    public User(string nome, string cognome, string email, string password, byte[] immagine, DateTime dataNascita)
+    public User(string name, string surname, string email, string password, DateOnly birthDate, byte[]? image = null)
     {
+        //Se image è vuota il software gestisce con un fallback
         Id = Guid.NewGuid();
-        Nome = nome;
-        Cognome = cognome;
+        Name = name;
+        Surname = surname;
         Email = email;
         Password = password;
-        Immagine = immagine;
-        DataNascita = dataNascita;
+        Image = image;
+        BirthDate = birthDate;
     }
 
-    public string Nome 
+    public string Name 
     { 
-        get => _nome; 
+        get => _name; 
         set 
         {
             if (string.IsNullOrEmpty(value))
             {
                 throw new ArgumentException("Nome non può essere vuoto.");
             }
-            _nome = value;
+            _name = value;
         } 
     }
 
-    public string Cognome 
+    public string Surname 
     { 
-        get => _cognome; 
+        get => _surname; 
         set 
         {
             if (string.IsNullOrEmpty(value))
             {
                 throw new ArgumentException("Nome non può essere vuoto.");
             }
-            _cognome = value;
+            _surname = value;
         } 
     }
 
@@ -79,58 +78,37 @@ public class User
         } 
     }
 
-    public DateTime DataNascita 
+    public DateOnly BirthDate 
     { 
-        get => _dataNascita; 
+        get => _birthDate; 
         set 
         {
-            if (value > DateTime.Today)
-            {
-                throw new ArgumentException("Si presuppone che tu sia già nato");
-            }
 
             if (DateTime.Today.Year - value.Year < 18)
             {
                 throw new ArgumentException("Devi avere almeno 18 anni per entrare in MeerKat");
             }
                 
-            _dataNascita = value;
+            _birthDate = value;
         } 
     }
-    public byte[] Immagine 
+    public byte[]? Image 
     { 
-        get => _immagine; 
+        get => _image; 
         set 
         {
-            if (value == null || value.Length == 0)
+            if (value is null)
             {
-                throw new ArgumentException("C'è stato un errore nel caricamento dell'immagine. Riprova.");
+                _image = null;
+                return;
             }
 
             try
             {
                 // TODO: Resizing da testare
-                using var image = Image.Load(value);
-                
-                var originalWidth = image.Width;
-                var originalHeight = image.Height;
-                
-                var cropSize = Math.Min(originalWidth, originalHeight);
-                var startX = (originalWidth - cropSize) / 2;
-                var startY = (originalHeight - cropSize) / 2;
-                
-                image.Mutate(x => x.Crop(new Rectangle(startX, startY, cropSize, cropSize)));
-                
-                image.Mutate(x => x.Resize(300, 300));
-                
-                using var ms = new System.IO.MemoryStream();
-                image.SaveAsJpeg(ms);
-                _immagine = ms.ToArray();
+                _image = ImageManipulation.CropImage(value, 300, 300);
             }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Impossibile processare l'immagine.", ex);
-            }
+            catch (Exception ex) { throw new InvalidOperationException("Impossibile processare l'immagine.", ex); }
         } 
     }
 
