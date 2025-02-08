@@ -5,6 +5,8 @@ namespace Shared.Entities;
 public class User
 {
     public Guid Id { get; private set; }
+    public ICollection<Team> ManagedTeams { get; set; } = new List<Team>();
+    public ICollection<Team> MemberOfTeams { get; set; } = new List<Team>();
     
     // = null! è utilizzato per silenziare i warning, dato che che il setter si occupa di validare.
     private string _name = null!;
@@ -13,7 +15,9 @@ public class User
     private string _hashedPassword = null!;
     private DateOnly _birthDate;
     private byte[]? _image;
-
+    
+    protected User() {}
+    
     public User(string name, string surname, string email, string password, DateOnly birthDate, byte[]? image = null)
     {
         //Se image è vuota il software gestisce con un fallback
@@ -25,6 +29,10 @@ public class User
         Image = image;
         BirthDate = birthDate;
     }
+    
+    /*
+     * Validazione dei dati
+     */
 
     public string Name 
     { 
@@ -46,7 +54,7 @@ public class User
         {
             if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentException("Nome non può essere vuoto.");
+                throw new ArgumentException("Cognome non può essere vuoto.");
             }
             _surname = value;
         } 

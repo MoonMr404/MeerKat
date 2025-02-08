@@ -5,14 +5,31 @@ namespace Shared.Entities;
 public class Team
 {
     public Guid Id { get; set; }
-    private string? Description { get; set; }
+    public string? Description { get; set; }
+    public User Manager { get; set; }
+    public Guid ManagerId { get; set; }
+    public ICollection<User> Members { get; set; } = new HashSet<User>(); //Uso Hashset per evitare ripetizioni e perchè non serve un ordine preciso
 
     private string _name = null!;
-    private DateTime _deadline;
+    private DateTime? _deadline;
     private byte[]? _image;
-    private HashSet<User> _members; //Uso Hashset per evitare ripetizioni e perchè non serve un ordine preciso
-    private User _manager;
+    
+    protected Team() {}
 
+    public Team(string name, User manager, string? description = null, DateTime? deadline = null, byte[]? image = null)
+    {
+        Id = Guid.NewGuid();
+        Name = name;
+        Manager = manager;
+        Description = description;
+        Deadline = deadline;
+        Image = image;
+    }
+    
+    /*
+     * Validazione dei dati
+     */
+    
     public string Name 
     { 
         get => _name; 
@@ -26,7 +43,7 @@ public class Team
         } 
     }
     
-    public DateTime Deadline
+    public DateTime? Deadline
     { 
         get => _deadline; 
         set 
@@ -60,6 +77,4 @@ public class Team
             catch (Exception ex) { throw new InvalidOperationException("Impossibile processare l'immagine.", ex); }
         } 
     }
-    
-    public HashSet<User> Members => _members ??= new HashSet<User>();
 }

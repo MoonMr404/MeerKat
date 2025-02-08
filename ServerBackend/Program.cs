@@ -30,6 +30,13 @@ var app = builder.Build();
 using (var serviceScope = app.Services.CreateScope())
 {
     var context = serviceScope.ServiceProvider.GetRequiredService<MeerkatDatabase>();
+    var paolo = new User("Paolo", "Bianchi", "Paolo@gmail.com", "pollofritto1234", new DateOnly(2004, 04, 03));
+    var paoloteam = new Team("Paolo's Team", paolo);
+    context.Users.Add(paolo);
+    context.Teams.Add(paoloteam);
+    context.SaveChanges();
+    Console.WriteLine(context.Users.Include(user => user.ManagedTeams).ToArray()[0].ManagedTeams);
+    //TESTING
 }
 
 app.Run();
