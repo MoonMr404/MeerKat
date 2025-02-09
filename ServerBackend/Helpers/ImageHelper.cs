@@ -1,9 +1,11 @@
-﻿namespace Shared.Utils;
-using SixLabors.ImageSharp;
+﻿using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 
-public class ImageManipulation
+namespace ServerBackend.Helpers;
+
+public class ImageHelper
 {
+    //TODO: Da testare e introdurre
     public static byte[] CropImage(byte[] img, int width, int height)
     {
         using var image = SixLabors.ImageSharp.Image.Load(img);

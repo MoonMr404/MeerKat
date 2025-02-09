@@ -1,8 +1,8 @@
 ﻿using System.Security.Cryptography;
 
-namespace Shared.Utils;
+namespace ServerBackend.Helpers;
 
-public static class SecretHasher
+public static class HashingHelper
 {
     private const int _saltSize = 16; 
     private const int _keySize = 32;

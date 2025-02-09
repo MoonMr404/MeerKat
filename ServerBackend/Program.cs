@@ -1,42 +1,35 @@
 using Microsoft.EntityFrameworkCore;
 using ServerBackend.Data;
-using Shared.Entities;
-using Shared.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
-/*
- * ENVIROMENT LOGIC
- */
-var useInMemoryDatabase = builder.Configuration.GetValue<bool>("UseInMemoryDatabase");
+var config = builder.Configuration;
 
-if (useInMemoryDatabase)
+if (config["REAL_DATABASE"] == null || config["REAL_DATABASE"] == "false")
 {
-    //Memory database for testing
-    builder.Services.AddDbContext<MeerkatDatabase>(options =>
-        options.UseInMemoryDatabase("TestDb"));
+    //Memory database per il testing
+    builder.Services.AddDbContext<MeerkatContext>(options =>
+        options.UseInMemoryDatabase("meerkat"));
 }
 else
 {
-    // Use real database for deployment
-    // TODO: Choose a provider
-    // var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    // builder.Services.AddDbContext<MeerkatDatabase>(options =>
-    //     options.UseSqlServer(connectionString)); 
+    //Database SQL, controllare appsettings.Development.json per l'acesso
+    var connectionString = builder.Configuration.GetConnectionString("Local");
+    builder.Services.AddDbContext<MeerkatContext>(options =>
+         options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))); 
 }
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-using (var serviceScope = app.Services.CreateScope())
+if (app.Environment.IsDevelopment())
 {
-    var context = serviceScope.ServiceProvider.GetRequiredService<MeerkatDatabase>();
-    var paolo = new User("Paolo", "Bianchi", "Paolo@gmail.com", "pollofritto1234", new DateOnly(2004, 04, 03));
-    var paoloteam = new Team("Paolo's Team", paolo);
-    context.Users.Add(paolo);
-    context.Teams.Add(paoloteam);
-    context.SaveChanges();
-    Console.WriteLine(context.Users.Include(user => user.ManagedTeams).ToArray()[0].ManagedTeams);
-    //TESTING
+    app.UseDeveloperExceptionPage();
 }
+
+app.UseHttpsRedirection();
+app.MapControllers();
 
 app.Run();
