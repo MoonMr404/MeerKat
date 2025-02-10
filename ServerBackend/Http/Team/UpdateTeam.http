@@ -1,9 +1,0 @@
-﻿PUT {{url}}/api/Team
-Content-Type: application/json
-
-{
-  "id": "afae0234-6407-4c60-a616-b2771007ce2f",
-  "name": "Pollorotto",
-  "description": "Il pollo è rotto qui",
-  "managerId": "a986b437-0a27-4649-ad0b-abbbe532e09e"
-}

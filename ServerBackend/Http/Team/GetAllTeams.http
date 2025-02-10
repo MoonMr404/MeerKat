@@ -1,1 +1,0 @@
-﻿GET {{url}}/api/Team?nested=true

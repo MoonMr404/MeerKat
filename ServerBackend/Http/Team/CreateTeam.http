@@ -1,8 +1,0 @@
-﻿POST {{url}}/api/Team
-Content-Type: application/json
-
-{
-  "name": "Pollosacro",
-  "description": "Il pollo è sacro qui",
-  "managerId": "a986b437-0a27-4649-ad0b-abbbe532e09e"
-}
