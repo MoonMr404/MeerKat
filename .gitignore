@@ -1,2 +1,7 @@
+# Deliverables and Drafts
 ~$*
 *.tmp
+#Built projects
+**/bin/
+**/obj/
+**/packages/
