@@ -7,14 +7,78 @@
         x:Class="ClientAvalonia.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="ClientAvalonia">
+        Title="ClientAvalonia"
+        Background="Transparent"
+        TransparencyLevelHint="AcrylicBlur">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+    
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65"/>
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+        
+       <SplitView IsPaneOpen="{Binding IsPaneOpen}"
+                  OpenPaneLength="200"
+                  CompactPaneLength="48"
+                  DisplayMode="CompactInline"
+                  PaneBackground="Transparent">
+           <SplitView.Pane> 
+               <Border BorderThickness="0 0 1 0" 
+                       CornerRadius="0">
+                   <StackPanel Spacing="5">
+                   <ExperimentalAcrylicBorder IsHitTestVisible="False">
+                       <ExperimentalAcrylicBorder.Material>
+                           <ExperimentalAcrylicMaterial
+                               BackgroundSource="Digger"
+                               TintColor="LightGray"
+                               TintOpacity="1"
+                               MaterialOpacity="0.65"/>
+                       </ExperimentalAcrylicBorder.Material>
+                   </ExperimentalAcrylicBorder>
+                  
+                   <Button Command="{Binding TriggerPaneCommand}"
+                           CornerRadius="10">
+                        <PathIcon Data="{StaticResource linehorizontal3regular}"></PathIcon>
+                   </Button>
+                   
+                       <ListBox Background="Transparent" 
+                                ItemsSource="{Binding Pages}"
+                                SelectedItem="{Binding SelectedListItem}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:PageListTemplate}">
+                                <StackPanel Spacing="15" Orientation="Horizontal">
+                                    <PathIcon Data="{Binding ListItemIcon}" ></PathIcon>
+                                    <TextBlock Text="{Binding Label}"/>  
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                   </ListBox>
+               </StackPanel>
+               </Border>
+           </SplitView.Pane>
+           
+           <SplitView.Content>
+               <Border CornerRadius="0 0 0 0" 
+                       Background="Transparent"
+                       BoxShadow="inset 2 0 4 0 Black">
+                    <TransitioningContentControl Content="{Binding CurrentPage}" />
+               </Border>
+           </SplitView.Content>
+           
+       </SplitView>
+        
+        
+    </Panel>
+    
 </Window>

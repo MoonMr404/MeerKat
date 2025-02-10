@@ -1,0 +1,64 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClientAvalonia.Views.RegistrationView"
+             xmlns:vm="using:ClientAvalonia.ViewModels"
+             x:DataType="vm:RegistrationViewModel">
+    
+    <Border Height="360" Width="460" Background="#7D68A1" CornerRadius="20" BoxShadow=" 2 3 5 3 Black" Margin ="10">
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <StackPanel  TextElement.Foreground="#5A4B72" Orientation="Vertical" VerticalAlignment="Top" Margin="20 20 10 10">
+                <TextBlock   VerticalAlignment="Center" Margin="0 5 5 5">Nome:</TextBlock>
+                <TextBox  Width="200" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 5 5"></TextBox>
+            </StackPanel>
+            <StackPanel TextElement.Foreground="#5A4B72" Orientation="Vertical" VerticalAlignment="Top" Margin="10 20 10 10"  >
+                <TextBlock VerticalAlignment="Center" Margin="0 5 5 5">Cognome:</TextBlock>
+                <TextBox  Width="200" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 5 5"></TextBox>
+            </StackPanel>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal">
+            <StackPanel  TextElement.Foreground="#5A4B72" Orientation="Vertical" VerticalAlignment="Top" Margin="20 20 10 10">
+                <TextBlock   VerticalAlignment="Center" Margin="0 5 5 5">E-mail:</TextBlock>
+                <TextBox Width="200" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 5 5"></TextBox>
+            </StackPanel>
+            <StackPanel TextElement.Foreground="#5A4B72" Orientation="Vertical" VerticalAlignment="Top" Margin="0 20 10 10"  >
+                <TextBlock VerticalAlignment="Center" Margin="0 5 5 5">Data Di Nascita:</TextBlock>
+                <CalendarDatePicker Width="200" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 5 5"></CalendarDatePicker>
+            </StackPanel>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal">
+            <StackPanel  TextElement.Foreground="#5A4B72" Orientation="Vertical" VerticalAlignment="Top" Margin="20 20 10 10">
+                <TextBlock  VerticalAlignment="Center" Margin="0 5 5 10">Password:</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox RevealPassword="{Binding PasswordVisible}" PasswordChar="*" Width="160" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 0 5"></TextBox>
+                    <Button 
+                        Background="#5A4B72" 
+                        Margin="0 0 0 5"
+                        Command="{Binding ChangePasswordVisibilityCommand}">
+                            <PathIcon Data="{StaticResource eyeshowregular}"></PathIcon>
+                    </Button>  
+                </StackPanel>
+            </StackPanel>
+            <StackPanel TextElement.Foreground="#5A4B72" Orientation="Vertical" VerticalAlignment="Top" Margin="0 20 10 10"  >
+                <TextBlock VerticalAlignment="Center" Margin="0 5 5 10">Ripeti Password:</TextBlock>
+                <StackPanel TextElement.Foreground="#5A4B72" Orientation="Horizontal">
+                        <TextBox RevealPassword="{Binding PasswordVisible}" PasswordChar="*" Width="160" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 0 5"></TextBox>
+                        <Button 
+                        Background="#5A4B72" 
+                        Margin="0 0 0 5"
+                        Command="{Binding ChangePasswordVisibilityCommand}">
+                            <PathIcon Data="{StaticResource eyeshowregular}"></PathIcon>
+                    </Button>  
+                </StackPanel>
+        </StackPanel>
+    </StackPanel>
+        <Button Background="#5A4B72" Foreground="#433558" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 30 0"> Registrati </Button>    
+    </StackPanel>
+    
+    </Border>
+</UserControl>

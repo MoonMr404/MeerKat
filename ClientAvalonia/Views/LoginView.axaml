@@ -1,0 +1,32 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClientAvalonia.Views.LoginView"
+             xmlns:vm="using:ClientAvalonia.ViewModels"
+             x:DataType="vm:LoginViewModel">
+    
+    <Border Height="300" Width="250" Background="#7D68A1" CornerRadius="20" BoxShadow=" 2 3 5 3 Black">
+    <Panel>
+        <StackPanel  TextElement.Foreground="#5A4B72" Orientation="Vertical" VerticalAlignment="Top" Margin="20 20 10 10">
+            <TextBlock   VerticalAlignment="Center" Margin="0 5 5 5">E-mail:</TextBlock>
+            <TextBox BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 5 5"></TextBox>
+        </StackPanel>
+        <StackPanel TextElement.Foreground="#5A4B72" Orientation="Vertical" VerticalAlignment="Top" Margin="20 100 10 10"  >
+            <TextBlock   VerticalAlignment="Center" Margin="0 5 5 5">Password</TextBlock>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+             <TextBox Width="185" RevealPassword="{Binding PasswordVisible}" PasswordChar="*" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 0 5"></TextBox>
+             <Button 
+                 Background="#5A4B72" 
+                 Margin="0 0 0 5"
+                 Command="{Binding ChangePasswordVisibilityCommand}">
+                 <PathIcon Data="{StaticResource eyeshowregular}"></PathIcon>
+             </Button>   
+            </StackPanel>
+        </StackPanel>
+        <Button Background="#5A4B72" Foreground="#433558" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="40 "> Accedi </Button>      
+    </Panel>
+    </Border>
+    
+</UserControl>

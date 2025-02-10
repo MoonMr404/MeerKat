@@ -1,0 +1,46 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ClientAvalonia.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ClientAvalonia.Views.AuthenticationWindowView"
+        x:DataType="vm:AuthenticationWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="MeerKat - Authentification"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        SizeToContent="WidthAndHeight"
+        >
+        <!-- SizeToContent="WidthAndHeight" --> 
+        <Design.DataContext>
+                <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+                <vm:AuthenticationWindowViewModel/>
+        </Design.DataContext>
+        
+        <Panel MinHeight="500" MaxWidth="530" MinWidth="270" >
+                <ExperimentalAcrylicBorder IsHitTestVisible="False">
+                        <ExperimentalAcrylicBorder.Material>
+                                <ExperimentalAcrylicMaterial
+                                        BackgroundSource="Digger"
+                                        TintColor="Black"
+                                        TintOpacity="1"
+                                        MaterialOpacity="0.65"/>
+                        </ExperimentalAcrylicBorder.Material>
+                </ExperimentalAcrylicBorder>
+                
+                <Border  TextElement.Foreground="#4D4D4D" MinHeight="25" MaxHeight="50" Background="#262626" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                        <Panel>
+                        <TextBlock  VerticalAlignment="Center" Margin="5 5 5 5">Benvenuto in Meerkat</TextBlock>
+                        <Button  Content="{Binding ButtonText}"  Name="Button" Command="{Binding ChangeContent}" Background="Transparent" HorizontalAlignment="Right" Foreground="#4D4D4D">
+                        </Button>
+                        </Panel>
+                </Border >
+                
+                <TransitioningContentControl Content="{Binding CurrentPage}"/>
+                
+               
+                  
+        </Panel>
+</Window>
