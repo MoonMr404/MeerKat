@@ -27,7 +27,16 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [C:/Users/power/RiderProjects/MeerKat/ClientAvalonia/Assets/Icons.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/power/RiderProjects/MeerKat/ClientAvalonia/Views/AuthenticationWindowView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/power/RiderProjects/MeerKat/ClientAvalonia/Views/LoginView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/power/RiderProjects/MeerKat/ClientAvalonia/Views/MainWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/power/RiderProjects/MeerKat/ClientAvalonia/Views/RegistrationView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/power/RiderProjects/MeerKat/ClientAvalonia/Views/TeamsView.axaml]
