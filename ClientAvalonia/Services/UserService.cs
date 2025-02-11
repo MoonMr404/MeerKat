@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Splat;
 
 namespace ClientAvalonia.Services;
 
@@ -53,4 +55,14 @@ public class UserService(HttpClient httpClient, string apiBaseUrl)
         var response = await httpClient.DeleteAsync($"{_baseUrl}/{id}");
         response.EnsureSuccessStatusCode();
     }
+
+    public async Task<UserTokenDto> LoginAsync(LoginRequestDto loginRequest)
+    {
+        var response = await httpClient.PostAsJsonAsync($"{_baseUrl}/login", loginRequest);
+        response.EnsureSuccessStatusCode();
+        UserTokenDto token = await response.Content.ReadFromJsonAsync<UserTokenDto>() ?? throw new InvalidOperationException("Failed to retrieve the user token");
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+        return token;
+    }
+    
 }

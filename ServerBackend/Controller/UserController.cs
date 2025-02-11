@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using ServerBackend.Data;
 using ServerBackend.Helpers;
 using ServerBackend.Models;
@@ -27,8 +32,10 @@ public class UserController(
     
     //GET: api/User
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers([FromQuery] bool nested = false)
     {
+        if (!JwtHelper.IsAdmin(HttpContext.User)) return Unauthorized();
         var usersQuery = NestedTypes(nested);
 
         var users = await usersQuery.ToListAsync();
@@ -39,8 +46,10 @@ public class UserController(
 
     //GET: api/User/{id}
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<ActionResult<UserDto>> GetUserById(Guid id, [FromQuery] bool nested = false)
     {
+        if (!JwtHelper.IsAmongSelf(HttpContext.User,id) && !JwtHelper.IsAdmin(HttpContext.User)) return Unauthorized();
         var usersQuery = NestedTypes(nested);
         
         var user = await usersQuery.FirstOrDefaultAsync(u => u.Id == id);
@@ -50,7 +59,8 @@ public class UserController(
     
     //POST: api/User
     [HttpPost]
-    public async Task<ActionResult<UserDto>> CreateUser([FromBody] User user)
+    [Authorize]
+    public async Task<ActionResult<UserDto>> CreateUser([FromBody] User user) //Register
     {
         user.Password = HashingHelper.Hash(user.Password);
 
@@ -63,8 +73,10 @@ public class UserController(
     
     // PUT: api/User
     [HttpPut]
+    [Authorize]
     public async Task<IActionResult> UpdateUser([FromBody] User user)
     {
+        if (!JwtHelper.IsAmongSelf(HttpContext.User,user.Id) && !JwtHelper.IsAdmin(HttpContext.User)) return Unauthorized();
         user.Password = HashingHelper.Hash(user.Password);
         
         meerkatContext.Users.Update(user);
@@ -76,8 +88,10 @@ public class UserController(
 
     // DELETE: api/User/{id}
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> DeleteUser(Guid id)
     {
+        if (!JwtHelper.IsAmongSelf(HttpContext.User,id) && !JwtHelper.IsAdmin(HttpContext.User)) return Unauthorized();
         var user = await meerkatContext.Users.FindAsync(id);
 
         if (user == null) return NotFound(); // 404
@@ -86,5 +100,28 @@ public class UserController(
         await meerkatContext.SaveChangesAsync();
 
         return NoContent(); // 204
+    }
+    
+    //POST: api/User/login
+    [HttpPost("login")]
+    public async Task<IActionResult> UserLogin([FromBody] LoginRequestDto request)
+    {
+        User? loggedUser = await meerkatContext.Users.FirstOrDefaultAsync(
+            u => u.Email == request.Email);
+        
+        if (loggedUser == null) return NotFound(); //404
+        
+        Console.WriteLine($"Email: {loggedUser.Email} | Password: {loggedUser.Password}");
+        
+        // Verify the input password against the stored hash
+        if (!HashingHelper.Verify(request.Password, loggedUser.Password))
+            return Unauthorized(); // 401
+        
+        
+        
+        var token = JwtHelper.GenerateJwtToken(loggedUser);
+        
+        return Ok( new { token = token } );
+        
     }
 }

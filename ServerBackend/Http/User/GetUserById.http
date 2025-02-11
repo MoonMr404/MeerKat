@@ -1,1 +1,2 @@
 ﻿GET {{url}}/api/User/a986b437-0a27-4649-ad0b-abbbe532e09e?nested=true
+Authorization: Bearer {{authToken}}

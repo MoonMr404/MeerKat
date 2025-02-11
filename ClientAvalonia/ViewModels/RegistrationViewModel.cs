@@ -21,7 +21,6 @@ public partial class RegistrationViewModel : ViewModelBase
     
     private UserService userService;
     
-    
     public RegistrationViewModel()
     {
         userService = Locator.Current.GetService<UserService>() ?? throw new InvalidOperationException();

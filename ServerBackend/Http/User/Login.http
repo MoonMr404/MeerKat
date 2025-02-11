@@ -1,0 +1,7 @@
+﻿POST {{url}}/api/User/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "securepassword123"
+}
