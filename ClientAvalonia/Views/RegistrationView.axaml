@@ -12,22 +12,22 @@
         <StackPanel Orientation="Horizontal">
             <StackPanel  TextElement.Foreground="#5A4B72" Orientation="Vertical" VerticalAlignment="Top" Margin="20 20 10 10">
                 <TextBlock   VerticalAlignment="Center" Margin="0 5 5 5">Nome:</TextBlock>
-                <TextBox  Width="200" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 5 5"></TextBox>
+                <TextBox  Text="{Binding Name, Mode=TwoWay}" Width="200" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 5 5"></TextBox>
             </StackPanel>
             <StackPanel TextElement.Foreground="#5A4B72" Orientation="Vertical" VerticalAlignment="Top" Margin="10 20 10 10"  >
                 <TextBlock VerticalAlignment="Center" Margin="0 5 5 5">Cognome:</TextBlock>
-                <TextBox  Width="200" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 5 5"></TextBox>
+                <TextBox  Text="{Binding Surname, Mode=TwoWay}" Width="200" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 5 5"></TextBox>
             </StackPanel>
         </StackPanel>
         
         <StackPanel Orientation="Horizontal">
             <StackPanel  TextElement.Foreground="#5A4B72" Orientation="Vertical" VerticalAlignment="Top" Margin="20 20 10 10">
                 <TextBlock   VerticalAlignment="Center" Margin="0 5 5 5">E-mail:</TextBlock>
-                <TextBox Width="200" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 5 5"></TextBox>
+                <TextBox Text="{Binding Email, Mode=TwoWay}" Width="200" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 5 5"></TextBox>
             </StackPanel>
             <StackPanel TextElement.Foreground="#5A4B72" Orientation="Vertical" VerticalAlignment="Top" Margin="0 20 10 10"  >
                 <TextBlock VerticalAlignment="Center" Margin="0 5 5 5">Data Di Nascita:</TextBlock>
-                <CalendarDatePicker Width="200" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 5 5"></CalendarDatePicker>
+                <CalendarDatePicker SelectedDate="{Binding DateOfBirth}" Width="200" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 5 5"></CalendarDatePicker>
             </StackPanel>
         </StackPanel>
         
@@ -35,7 +35,7 @@
             <StackPanel  TextElement.Foreground="#5A4B72" Orientation="Vertical" VerticalAlignment="Top" Margin="20 20 10 10">
                 <TextBlock  VerticalAlignment="Center" Margin="0 5 5 10">Password:</TextBlock>
                 <StackPanel Orientation="Horizontal">
-                    <TextBox RevealPassword="{Binding PasswordVisible}" PasswordChar="*" Width="160" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 0 5"></TextBox>
+                    <TextBox Text="{Binding Password, Mode=TwoWay}" RevealPassword="{Binding PasswordVisible}" PasswordChar="*" Width="160" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 0 5"></TextBox>
                     <Button 
                         Background="#5A4B72" 
                         Margin="0 0 0 5"
@@ -47,7 +47,7 @@
             <StackPanel TextElement.Foreground="#5A4B72" Orientation="Vertical" VerticalAlignment="Top" Margin="0 20 10 10"  >
                 <TextBlock VerticalAlignment="Center" Margin="0 5 5 10">Ripeti Password:</TextBlock>
                 <StackPanel TextElement.Foreground="#5A4B72" Orientation="Horizontal">
-                        <TextBox RevealPassword="{Binding PasswordVisible}" PasswordChar="*" Width="160" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 0 5"></TextBox>
+                        <TextBox Text="{Binding PasswordVerify, Mode=TwoWay}" RevealPassword="{Binding PasswordVisible}" PasswordChar="*" Width="160" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 0 5"></TextBox>
                         <Button 
                         Background="#5A4B72" 
                         Margin="0 0 0 5"
@@ -57,7 +57,7 @@
                 </StackPanel>
         </StackPanel>
     </StackPanel>
-        <Button Background="#5A4B72" Foreground="#433558" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 30 0"> Registrati </Button>    
+        <Button Command="{Binding RegisterUserCommand}" Background="#5A4B72" Foreground="#433558" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 30 0"> Registrati </Button>    
     </StackPanel>
     
     </Border>
