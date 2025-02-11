@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using ServerBackend.Data;
 using ServerBackend.Helpers;
 using ServerBackend.Models;
+using ServerBackend.Validators;
 using Shared.Dto;
 
 namespace ServerBackend.Controller;
@@ -59,13 +60,12 @@ public class UserController(
     
     //POST: api/User
     [HttpPost]
-    [Authorize]
     public async Task<ActionResult<UserDto>> CreateUser([FromBody] User user) //Register
     {
         user.Password = HashingHelper.Hash(user.Password);
 
         meerkatContext.Users.Add(user);
-        if (!ModelState.IsValid) { return BadRequest(ModelState); } //400
+        if (!ModelState.IsValid || !(await user.IsValid(meerkatContext))) { return BadRequest(ModelState); } //400
         await meerkatContext.SaveChangesAsync();
 
         return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, Models.User.ToDto(user)); // Returns 201 Created
@@ -80,7 +80,7 @@ public class UserController(
         user.Password = HashingHelper.Hash(user.Password);
         
         meerkatContext.Users.Update(user);
-        if (!ModelState.IsValid) { return BadRequest(ModelState); } //400
+        if (!ModelState.IsValid || !(await user.IsValid(meerkatContext))) { return BadRequest(ModelState); } //400
         await meerkatContext.SaveChangesAsync();
 
         return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, Models.User.ToDto(user)); // 201
