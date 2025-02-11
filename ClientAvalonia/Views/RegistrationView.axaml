@@ -58,7 +58,7 @@
         </StackPanel>
     </StackPanel>
         <Button Command="{Binding RegisterUserCommand}" Background="#5A4B72" Foreground="#433558" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 30 0"> Registrati </Button>    
+        <TextBlock Text="{Binding ErrorMessage}" Foreground="#a30d3d" FontWeight="Bold" Margin="10 10 10 10" VerticalAlignment="Bottom" HorizontalAlignment="Center" IsVisible="{Binding ErrorVisible}"/>
     </StackPanel>
-    
     </Border>
 </UserControl>

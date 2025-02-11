@@ -9,6 +9,7 @@
     
     <Border Height="300" Width="250" Background="#7D68A1" CornerRadius="20" BoxShadow=" 2 3 5 3 Black">
     <Panel>
+        <TextBlock Text="{Binding ErrorMessage}" Foreground="#a30d3d" FontWeight="Bold" Margin="10 10 10 10" VerticalAlignment="Bottom" HorizontalAlignment="Center" IsVisible="{Binding ErrorVisible}"/>
         <StackPanel  TextElement.Foreground="#5A4B72" Orientation="Vertical" VerticalAlignment="Top" Margin="20 20 10 10">
             <TextBlock   VerticalAlignment="Center" Margin="0 5 5 5">E-mail:</TextBlock>
             <TextBox Text="{Binding Email}" BorderBrush="Transparent" Background="#5A4B72" VerticalAlignment="Center" Margin="0 0 5 5"></TextBox>
