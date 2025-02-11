@@ -17,7 +17,7 @@ public partial class AuthenticationWindowViewModel : ViewModelBase
             ButtonText = "Accedi";
         } else if (CurrentPage is RegistrationViewModel)
         {
-            ButtonText = "Reggistrati";
+            ButtonText = "Registrati";
             CurrentPage = new LoginViewModel();
             
         }

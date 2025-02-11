@@ -1,11 +1,14 @@
+using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
+using System.Net.Http;
 using Avalonia.Markup.Xaml;
+using ClientAvalonia.Services;
 using ClientAvalonia.ViewModels;
 using ClientAvalonia.Views;
+using Splat;
 
 namespace ClientAvalonia;
 
@@ -14,6 +17,17 @@ public partial class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+        ServiceRegistration();
+    }
+
+    private void ServiceRegistration()
+    {
+        Locator.CurrentMutable.Register(() => new HttpClient(), typeof(HttpClient));
+        
+        HttpClient client = Locator.Current.GetService<HttpClient>() ?? throw new InvalidOperationException();
+        string apiUrl = "http://localhost:5149";
+        
+        Locator.CurrentMutable.Register(() => new UserService(client,apiUrl), typeof(UserService));
     }
 
     public override void OnFrameworkInitializationCompleted()

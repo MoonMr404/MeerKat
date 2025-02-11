@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ServerBackend.Data;
 using ServerBackend.Helpers;
@@ -27,8 +28,10 @@ public class TeamController(
     
     //GET: api/Team
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<TeamDto>>> GetTeams([FromQuery] bool nested = false)
     {
+        if (!JwtHelper.IsAdmin(HttpContext.User)) return Unauthorized();
         var teamsQuery = NestedTypes(nested);
 
         var teams = await teamsQuery.ToListAsync();
@@ -50,9 +53,10 @@ public class TeamController(
     
     //POST: api/Team
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<TeamDto>> CreateTeam([FromBody] Team team)
     {
-
+        if (!JwtHelper.IsAmongSelf(HttpContext.User,team.ManagerId) && !JwtHelper.IsAdmin(HttpContext.User)) return Unauthorized();
         var manager = await meerkatContext.Users.FindAsync(team.ManagerId);
         
         if (manager == null) return BadRequest();
@@ -68,9 +72,10 @@ public class TeamController(
     
     // PUT: api/Team
     [HttpPut]
+    [Authorize]
     public async Task<IActionResult> UpdateTeam([FromBody] Team team)
     {
-
+        if (!JwtHelper.IsAmongSelf(HttpContext.User,team.ManagerId) && !JwtHelper.IsAdmin(HttpContext.User)) return Unauthorized();
         meerkatContext.Teams.Update(team);
         if (!ModelState.IsValid) { return BadRequest(ModelState); } //400
         await meerkatContext.SaveChangesAsync();
@@ -80,11 +85,14 @@ public class TeamController(
 
     // DELETE: api/Team/{id}
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> DeleteTeam(Guid id)
     {
         var team = await meerkatContext.Teams.FindAsync(id);
 
         if (team == null) return NotFound(); // 404
+        
+        if (!JwtHelper.IsAmongSelf(HttpContext.User,team.ManagerId) && !JwtHelper.IsAdmin(HttpContext.User)) return Unauthorized();
 
         meerkatContext.Teams.Remove(team);
         await meerkatContext.SaveChangesAsync();

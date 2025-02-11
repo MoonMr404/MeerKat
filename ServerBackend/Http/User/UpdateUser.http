@@ -1,8 +1,9 @@
 ﻿PUT {{url}}/api/User
+Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
-  "id": "a986b437-0a27-4649-ad0b-abbbe532e09e",
+  "id": "af635ed8-9a96-4ecb-a2bd-2d6e59832eb5",
   "name": "Ilcoglione",
   "surname": "Doe",
   "email": "john.doe@example.com",
