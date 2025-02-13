@@ -16,6 +16,7 @@ public partial class LoginViewModel : ViewModelBase
     [ObservableProperty] private bool _passwordVisible;
     [ObservableProperty] private string _errorMessage;
     [ObservableProperty] private bool _errorVisible;
+    [ObservableProperty] private bool userLoggedIn=false;
     
     //Dto
     [ObservableProperty] private string _email;
@@ -47,6 +48,7 @@ public partial class LoginViewModel : ViewModelBase
         try
         {
             await userService.LoginAsync(login);
+            userLoggedIn = true;
         }
         catch (Exception e)
         {

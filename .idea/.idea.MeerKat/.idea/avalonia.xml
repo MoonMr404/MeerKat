@@ -8,6 +8,7 @@
         <entry key="ClientAvalonia/Views/AuthenticationWindow.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/AuthenticationWindowView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/AuthentificationWindow.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
+        <entry key="ClientAvalonia/Views/EditTeamView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/LoginView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/MainWindow.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/RegistrationView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />

@@ -9,6 +9,8 @@ public partial class AuthenticationWindowViewModel : ViewModelBase
     [ObservableProperty] private ViewModelBase _currentPage = new LoginViewModel();
     [ObservableProperty] private String _buttonText="Registrati";
     
+    
+    
     public void ChangeContent()
     {
         if (CurrentPage is LoginViewModel)
@@ -22,5 +24,7 @@ public partial class AuthenticationWindowViewModel : ViewModelBase
             
         }
     }
+    
+    
     
 }
