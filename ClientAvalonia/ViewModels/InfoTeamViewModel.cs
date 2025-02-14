@@ -18,6 +18,11 @@ public partial class InfoTeamViewModel : ViewModelBase
     [ObservableProperty] private string _descriptionColor = "#313131";
     [ObservableProperty] private string _deadlineColor = "#313131";
 
+    public InfoTeamViewModel(TeamDto team)
+    {
+        Team = team;
+    }
+
     private ObservableCollection<UserTemplate> members { get; } = new ObservableCollection<UserTemplate>();
 
     [RelayCommand]

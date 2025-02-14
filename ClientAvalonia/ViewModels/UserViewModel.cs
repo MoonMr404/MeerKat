@@ -21,9 +21,12 @@ public partial class UserViewModel : ViewModelBase
     [ObservableProperty] private bool _editEnableName = false;
     [ObservableProperty] private bool _editEnableMail = false;
     [ObservableProperty] private bool _editEnableDate = false;
+    [ObservableProperty] private bool _editEnableSurname = false; 
     [ObservableProperty] private string _nameColor = "#313131";
     [ObservableProperty] private string _mailColor = "#313131";
     [ObservableProperty] private string _dateColor = "#313131";
+    [ObservableProperty]  private string _surnameColor= "#313131";
+
 
     private UserService userService;
     public UserViewModel()
@@ -45,10 +48,18 @@ public partial class UserViewModel : ViewModelBase
     [RelayCommand]
     private void toggleEditName()
     {
-        
         EditEnableName = !EditEnableName;
         if(NameColor == "#717171") NameColor = "#313131";
         else NameColor = "#717171";
+    }
+    
+    [RelayCommand]
+    private void toggleEditSurname()
+    {
+        
+        EditEnableSurname = !EditEnableSurname;
+        if(SurnameColor == "#717171") SurnameColor = "#313131";
+        else SurnameColor = "#717171";
     }
     
     [RelayCommand]
@@ -63,9 +74,14 @@ public partial class UserViewModel : ViewModelBase
     [RelayCommand]
     private void toggleEditDate()
     {
-        if (EditEnableMail == true) User.Email = NameSurname;
         EditEnableDate = !EditEnableDate;
         if(DateColor == "#717171") DateColor = "#313131";
         else DateColor = "#717171";
+    }
+
+    [RelayCommand]
+    private void saveEdit()
+    {
+        userService.UpdateUserAsync(new UserDto(){Name=_user.Name, Email =_user.Email , Surname =_user.Surname , Password = _user.Password , Id = _user.Id, DateOfBirth = _user.DateOfBirth});
     }
 }

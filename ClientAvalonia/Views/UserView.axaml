@@ -19,7 +19,7 @@
                 <PathIcon Data="{StaticResource personregular}" Foreground="#313131" Width="100" Height="100" Margin="0 0 0 15"/>
                 
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
-                        <TextBox Width="230" VerticalAlignment="Center" IsEnabled="{Binding EditEnableName}"  Text="{Binding User.Name, Mode=TwoWay }" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" Foreground="{Binding NameColor}"/>
+                        <TextBox Width="230" Name="nameBox" VerticalAlignment="Center" IsEnabled="{Binding EditEnableName}"  Text="{Binding User.Name, Mode=TwoWay }" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" Foreground="{Binding NameColor}"/>
                         <Button 
                             VerticalAlignment="Center"
                             Background="Transparent" 
@@ -27,6 +27,17 @@
                             Command="{Binding toggleEditNameCommand}"> 
                             <PathIcon Data="{StaticResource editregular}"></PathIcon>
                         </Button>   
+                </StackPanel>
+                
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
+                    <TextBox Width="230" VerticalAlignment="Center" IsEnabled="{Binding EditEnableSurname}" Text="{Binding User.Surname, Mode=TwoWay}" HorizontalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" Foreground="{Binding SurnameColor}"/>
+                    <Button 
+                        VerticalAlignment="Center"
+                        Background="Transparent" 
+                        Margin="2 4 2 5"
+                        Command="{Binding toggleEditSurnameCommand}"> 
+                        <PathIcon Data="{StaticResource editregular}"></PathIcon>
+                    </Button>   
                 </StackPanel>
                 
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
@@ -51,6 +62,14 @@
                     </Button>   
                 </StackPanel>
                 
+                <Button 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right"
+                    Background="#523681" 
+                    Margin="2 4 2 5"
+                    Command="{Binding saveEditCommand}">  <!-- Command="{Binding }" -->
+                    salva modifiche
+                </Button>   
             </StackPanel>
         </Border>
     </Panel>
