@@ -19,7 +19,7 @@ public static class UserValidator
         if (string.IsNullOrWhiteSpace(user.Email) || !emailRegex.IsMatch(user.Email)) return false;
         if (string.IsNullOrWhiteSpace(user.Password)) return false;
         if (DateOnly.FromDateTime(DateTime.Today).Year - user.DateOfBirth.Year < 18) return false;
-        if (await meerkatContext.Users.AnyAsync(u => u.Email == user.Email)) return false;
+        if (await meerkatContext.Users.AnyAsync(u => u.Email == user.Email && u.Id != user.Id)) return false;
         if (user.Password.Length < 8) return false;
 
         return true;

@@ -76,12 +76,12 @@ public class UserController(
     [HttpPost]
     public async Task<ActionResult<UserDto>> CreateUser([FromBody] User user) //Register
     {
+        if (!ModelState.IsValid || !(await user.IsValid(meerkatContext))) { return BadRequest(ModelState); } //400
         user.Password = HashingHelper.Hash(user.Password);
 
         meerkatContext.Users.Add(user);
-        if (!ModelState.IsValid || !(await user.IsValid(meerkatContext))) { return BadRequest(ModelState); } //400
+        
         await meerkatContext.SaveChangesAsync();
-
         return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, Models.User.ToDto(user)); // Returns 201 Created
     }
     
@@ -135,7 +135,7 @@ public class UserController(
         
         var token = JwtHelper.GenerateJwtToken(loggedUser);
         
-        return Ok( new { token = token } );
+        return Ok( new UserTokenDto() { Token = token } );
         
     }
 }
