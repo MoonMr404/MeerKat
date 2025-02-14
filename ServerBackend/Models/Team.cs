@@ -19,11 +19,13 @@ public class Team
     public Guid ManagerId { get; set; }
     public User? Manager { get; set; }
     public ICollection<User>? Members { get; set; }
+    public ICollection<TaskList>? TaskList { get; set; }
     
     public Team() {}
 
     public Team(string name, Guid managerId, User manager, string? description = null, DateTime? deadline = null, byte[]? image = null,
-        ICollection<User>? members = null)
+        ICollection<User>? members = null,
+        ICollection<TaskList>? taskList = null)
     {
         Name = name;
         Description = description;
@@ -32,6 +34,7 @@ public class Team
         ManagerId = managerId;
         Manager = manager;
         Members = members;
+        TaskList = taskList;
     }
     
     public static TeamDto ToDto(Team team, bool nested = false)
@@ -50,6 +53,7 @@ public class Team
 
         if (team.Manager != null) teamDto.Manager = User.ToDto(team.Manager);
         teamDto.Members = team.Members?.Select(u => User.ToDto(u)).ToList();
+        teamDto.TaskList = team.TaskList?.Select(t => Models.TaskList.ToDto(t)).ToList();
 
         return teamDto;
     }
