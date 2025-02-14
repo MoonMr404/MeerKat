@@ -10,7 +10,6 @@
         Title="MeerKat - Authentification"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
-        SystemDecorations="None"
         SizeToContent="WidthAndHeight"
         >
         <!-- SizeToContent="WidthAndHeight" --> 

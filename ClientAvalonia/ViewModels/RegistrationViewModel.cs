@@ -55,8 +55,7 @@ public partial class RegistrationViewModel : ViewModelBase
         try
         {
             await userService.CreateUserAsync(newUser);
-            AuthenticationWindowViewModel authenticationWindowViewModel = Locator.Current.GetService<AuthenticationWindowViewModel>();
-            authenticationWindowViewModel.CurrentPage = new LoginViewModel();
+            
         }
         catch (Exception e)
         {

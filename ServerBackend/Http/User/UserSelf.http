@@ -1,0 +1,5 @@
+﻿### GET request to example server
+GET {{url}}/api/User/self?nested=true
+Authorization: Bearer {{authToken}}
+
+###

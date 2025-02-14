@@ -32,7 +32,7 @@
                                     <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding description}"></TextBlock>
                                 </StackPanel>
                             </Border>
-                                <Button VerticalAlignment="Center" Height="40" Width="50" Foreground=  "#523681" Background="#9B71E1" CornerRadius="10">
+                                <Button VerticalAlignment="Center" Height="40" Width="50" Foreground=  "#523681" Background="#9B71E1" CornerRadius="10" Command="{Binding editTeamCommand}">
                                     <PathIcon Data="{StaticResource editregular}"/>
                                 </Button>
                             </StackPanel>

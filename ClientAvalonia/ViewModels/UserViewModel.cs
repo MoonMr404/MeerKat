@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
+using Avalonia.Data;
 using ClientAvalonia.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,6 +13,8 @@ namespace ClientAvalonia.ViewModels;
 
 public partial class UserViewModel : ViewModelBase
 {
+    
+    [ObservableProperty] private UserDto _user= new UserDto() {Name="", Email ="" , Surname ="" , Password ="" , Id = Guid.Empty, DateOfBirth = DateOnly.FromDateTime(DateTime.Today)};
     [ObservableProperty] private string _nameSurname = "John Doe";
     [ObservableProperty] private string _eMail = "JohnDoe@gmail.com";
     [ObservableProperty] private string _dateOfBirth = "01/01/1990";
@@ -25,12 +29,23 @@ public partial class UserViewModel : ViewModelBase
     public UserViewModel()
     {
         userService = Locator.Current.GetService<UserService>() ?? throw new InvalidOperationException();
-        
+        LoadUserAsync();
     }
+
+    public async Task LoadUserAsync()
+    {
+        userService.GetUserSelfAsync();
+        var user= await userService.GetUserSelfAsync();
+        Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            User = user;
+        });
+    } 
 
     [RelayCommand]
     private void toggleEditName()
     {
+        
         EditEnableName = !EditEnableName;
         if(NameColor == "#717171") NameColor = "#313131";
         else NameColor = "#717171";
@@ -39,6 +54,7 @@ public partial class UserViewModel : ViewModelBase
     [RelayCommand]
     private void toggleEditMail()
     {
+      
         EditEnableMail = !EditEnableMail;
         if(MailColor == "#717171") MailColor = "#313131";
         else MailColor = "#717171";
@@ -47,6 +63,7 @@ public partial class UserViewModel : ViewModelBase
     [RelayCommand]
     private void toggleEditDate()
     {
+        if (EditEnableMail == true) User.Email = NameSurname;
         EditEnableDate = !EditEnableDate;
         if(DateColor == "#717171") DateColor = "#313131";
         else DateColor = "#717171";

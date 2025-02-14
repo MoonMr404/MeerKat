@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
@@ -9,6 +10,8 @@ using Avalonia.Rendering;
 using ClientAvalonia.Services;
 using ClientAvalonia.ViewModels;
 using ClientAvalonia.Views;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using SixLabors.ImageSharp.ColorSpaces.Conversion;
 using Splat;
 
 namespace ClientAvalonia;
@@ -35,28 +38,26 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            DisableAvaloniaDataAnnotationValidation();
-            var Authentication = new AuthenticationWindowViewModel();
-            var AuthenticationView= new AuthenticationWindowView { DataContext = Authentication }; 
-            desktop.MainWindow = AuthenticationView;
-            AuthenticationView.Show();
-            LoginViewModel loginViewModel = Locator.Current.GetService<LoginViewModel>();
-
-            while (true)
+            var mw = new MainWindowViewModel();
+            var aw = new AuthenticationWindowViewModel();
+            var authWindow = new AuthenticationWindowView()
             {
-                if(loginViewModel.UserLoggedIn == true)
+                DataContext = aw
+            };
+            aw.LoginSuccess += (sender, args) =>
+            {
+                var mainWindow = new MainWindow()
                 {
-                    desktop.MainWindow = new MainWindow() { DataContext = new MainWindowViewModel() };
-                    desktop.MainWindow.Show();
-                    AuthenticationView.Close();
-                    break;
-                }
-            }
-
+                    DataContext = mw
+                };
+                mainWindow.Show();
+                authWindow.Close();
+                desktop.MainWindow = mainWindow;
+            };
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
-            
-          
+            desktop.MainWindow = authWindow;
+            authWindow.Show();
         }
 
         base.OnFrameworkInitializationCompleted();

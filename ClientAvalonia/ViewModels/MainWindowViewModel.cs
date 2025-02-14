@@ -15,7 +15,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
      [ObservableProperty] private ViewModelBase _currentPage = new UserViewModel();
 
-     [ObservableProperty] private PageListTemplate? _selectedListItem;
+     [ObservableProperty] private PageListTemplate? _selectedListItem =  new PageListTemplate(typeof(UserViewModel), "personregular");
 
      public ObservableCollection<PageListTemplate> Pages { get; } = new()
      {
@@ -30,6 +30,7 @@ public partial class MainWindowViewModel : ViewModelBase
           if (instance is null) return;
           CurrentPage = (ViewModelBase)instance;
      }
+     
      
      [RelayCommand]
      private void TriggerPane()

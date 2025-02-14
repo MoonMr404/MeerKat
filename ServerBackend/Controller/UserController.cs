@@ -57,7 +57,21 @@ public class UserController(
         if (user == null) return NotFound(); //404
         return Ok( Models.User.ToDto(user, nested) ); //200
     }
-    
+
+    [HttpGet("self")]
+    [Authorize]
+    public async Task<ActionResult<UserDto>> GetUserSelf([FromQuery] bool nested = false)
+    {
+        var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        if(id==null) return Unauthorized();
+        
+        var usersQuery = NestedTypes(nested);
+        
+        var user = await usersQuery.FirstOrDefaultAsync(u => u.Id.ToString() == id);
+        if (user == null) return NotFound(); //404
+        return Ok( Models.User.ToDto(user, nested) ); //200
+    }
+
     //POST: api/User
     [HttpPost]
     public async Task<ActionResult<UserDto>> CreateUser([FromBody] User user) //Register

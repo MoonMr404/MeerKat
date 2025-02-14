@@ -19,7 +19,7 @@
                 <PathIcon Data="{StaticResource personregular}" Foreground="#313131" Width="100" Height="100" Margin="0 0 0 15"/>
                 
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
-                        <TextBox Width="230" VerticalAlignment="Center" IsEnabled="{Binding EditEnableName}"  Text="{Binding NameSurname}" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" Foreground="{Binding NameColor}"/>
+                        <TextBox Width="230" VerticalAlignment="Center" IsEnabled="{Binding EditEnableName}"  Text="{Binding User.Name, Mode=TwoWay }" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" Foreground="{Binding NameColor}"/>
                         <Button 
                             VerticalAlignment="Center"
                             Background="Transparent" 
@@ -30,7 +30,7 @@
                 </StackPanel>
                 
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
-                    <TextBox Width="230" VerticalAlignment="Center" IsEnabled="{Binding EditEnableMail}" Text="{Binding EMail}" HorizontalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" Foreground="{Binding MailColor}"/>
+                    <TextBox Width="230" VerticalAlignment="Center" IsEnabled="{Binding EditEnableMail}" Text="{Binding User.Email, Mode=TwoWay}" HorizontalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" Foreground="{Binding MailColor}"/>
                     <Button 
                         VerticalAlignment="Center"
                         Background="Transparent" 
@@ -41,7 +41,7 @@
                 </StackPanel>
                 
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
-                    <TextBox Width="230" VerticalAlignment="Center" IsEnabled="{Binding EditEnableDate}" Text="{Binding DateOfBirth}" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" Foreground="{Binding DateColor}"/>
+                    <TextBox Width="230" VerticalAlignment="Center" IsEnabled="{Binding EditEnableDate}" Text="{Binding User.DateOfBirth, Mode=TwoWay}" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" Foreground="{Binding DateColor}"/>
                     <Button 
                         VerticalAlignment="Center"
                         Background="Transparent" 

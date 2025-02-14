@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Avalonia.Controls;
+using ClientAvalonia.Views;
 using CommunityToolkit.Mvvm.Input;
 using Shared.Dto;
 using Splat;
@@ -17,8 +18,8 @@ public partial class TeamsViewModel : ViewModelBase
     };
     
    
-    
 }
+
 
 public class TeamTemplate
 {
@@ -30,7 +31,7 @@ public class TeamTemplate
     
 }
 
-public class ExampleTeamTemplate
+public partial class ExampleTeamTemplate
 {
     public string name { get; }
     public string description { get; }
@@ -39,6 +40,13 @@ public class ExampleTeamTemplate
     {
         this.name = name;
         this.description = description;
+    }
+    
+    [RelayCommand]
+    public void editTeam()
+    {
+        MainWindowViewModel window = new MainWindowViewModel();
+        window.CurrentPage = new InfoTeamViewModel();
     }
     
 }
