@@ -38,7 +38,6 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            var mw = new MainWindowViewModel();
             var aw = new AuthenticationWindowViewModel();
             var authWindow = new AuthenticationWindowView()
             {
@@ -46,6 +45,7 @@ public partial class App : Application
             };
             aw.LoginSuccess += (sender, args) =>
             {
+                var mw = new MainWindowViewModel();
                 var mainWindow = new MainWindow()
                 {
                     DataContext = mw
