@@ -6,9 +6,13 @@ namespace ClientAvalonia.ViewModels;
 
 public partial class AuthenticationWindowViewModel : ViewModelBase
 {
-    [ObservableProperty] private ViewModelBase _currentPage = new LoginViewModel();
-    [ObservableProperty] private String _buttonText="Registrati";
+    public event EventHandler? LoginSuccess;
     
+    [ObservableProperty] private ViewModelBase _currentPage = new RegistrationViewModel();
+    [ObservableProperty] private String _buttonText="Accedi";
+    
+    
+
     public void ChangeContent()
     {
         if (CurrentPage is LoginViewModel)
@@ -18,9 +22,11 @@ public partial class AuthenticationWindowViewModel : ViewModelBase
         } else if (CurrentPage is RegistrationViewModel)
         {
             ButtonText = "Registrati";
-            CurrentPage = new LoginViewModel();
+            CurrentPage = new LoginViewModel(LoginSuccess);
             
         }
     }
+    
+    
     
 }

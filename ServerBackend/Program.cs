@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var config = builder.Configuration;
 
-if (config["REAL_DATABASE"] == null || config["REAL_DATABASE"] == "false")
+if (config["REAL_DATABASE"] == null || config["REAL_DATABASE"] == "False")
 {
     //Memory database per il testing
     builder.Services.AddDbContext<MeerkatContext>(options =>

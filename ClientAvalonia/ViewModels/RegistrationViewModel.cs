@@ -55,6 +55,7 @@ public partial class RegistrationViewModel : ViewModelBase
         try
         {
             await userService.CreateUserAsync(newUser);
+            
         }
         catch (Exception e)
         {

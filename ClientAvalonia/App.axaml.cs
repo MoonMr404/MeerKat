@@ -1,13 +1,17 @@
 using System;
+using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using System.Net.Http;
 using Avalonia.Markup.Xaml;
+using Avalonia.Rendering;
 using ClientAvalonia.Services;
 using ClientAvalonia.ViewModels;
 using ClientAvalonia.Views;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using SixLabors.ImageSharp.ColorSpaces.Conversion;
 using Splat;
 
 namespace ClientAvalonia;
@@ -30,17 +34,30 @@ public partial class App : Application
         Locator.CurrentMutable.Register(() => new UserService(client,apiUrl), typeof(UserService));
     }
 
-    public override void OnFrameworkInitializationCompleted()
+    public override async void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            var aw = new AuthenticationWindowViewModel();
+            var authWindow = new AuthenticationWindowView()
+            {
+                DataContext = aw
+            };
+            aw.LoginSuccess += (sender, args) =>
+            {
+                var mw = new MainWindowViewModel();
+                var mainWindow = new MainWindow()
+                {
+                    DataContext = mw
+                };
+                mainWindow.Show();
+                authWindow.Close();
+                desktop.MainWindow = mainWindow;
+            };
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
-            DisableAvaloniaDataAnnotationValidation();
-            desktop.MainWindow = new AuthenticationWindowView()
-            {
-                DataContext = new AuthenticationWindowViewModel(),
-            };
+            desktop.MainWindow = authWindow;
+            authWindow.Show();
         }
 
         base.OnFrameworkInitializationCompleted();

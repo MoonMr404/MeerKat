@@ -34,6 +34,18 @@ public class UserService(HttpClient httpClient, string apiBaseUrl)
             return null;
         }
     }
+    
+    public async Task<UserDto?> GetUserSelfAsync( bool nested = false)
+    {
+        try
+        {
+            return await httpClient.GetFromJsonAsync<UserDto>($"{_baseUrl}/self?nested={nested}");
+        }
+        catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            return null;
+        }
+    }
 
     public async Task<UserDto> CreateUserAsync(UserDto user)
     {

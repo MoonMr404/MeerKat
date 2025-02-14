@@ -1,16 +1,13 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using Splat;
 
 namespace ClientAvalonia.Views;
 
-public partial class TeamsView : UserControl
+public partial class InfoTeamView : UserControl
 {
-    public TeamsView()
+    public InfoTeamView()
     {
         InitializeComponent();
     }
-
 }

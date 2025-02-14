@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
@@ -13,10 +14,15 @@ public partial class MainWindowViewModel : ViewModelBase
      [ObservableProperty]
      private bool _IsPaneOpen = true;
 
-     [ObservableProperty] private ViewModelBase _currentPage = new UserViewModel();
+     [ObservableProperty] private ViewModelBase _currentPage;
 
-     [ObservableProperty] private PageListTemplate? _selectedListItem;
+     [ObservableProperty] private PageListTemplate? _selectedListItem =  new PageListTemplate(typeof(UserViewModel), "personregular");
 
+     public MainWindowViewModel()
+     {
+          SelectedListItem = Pages.First();
+     }
+     
      public ObservableCollection<PageListTemplate> Pages { get; } = new()
      {
           new PageListTemplate(typeof(UserViewModel), "personregular"),
@@ -30,6 +36,7 @@ public partial class MainWindowViewModel : ViewModelBase
           if (instance is null) return;
           CurrentPage = (ViewModelBase)instance;
      }
+     
      
      [RelayCommand]
      private void TriggerPane()

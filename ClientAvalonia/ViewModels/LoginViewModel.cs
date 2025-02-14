@@ -2,6 +2,8 @@
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
 using ClientAvalonia.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -16,15 +18,19 @@ public partial class LoginViewModel : ViewModelBase
     [ObservableProperty] private bool _passwordVisible;
     [ObservableProperty] private string _errorMessage;
     [ObservableProperty] private bool _errorVisible;
+    [ObservableProperty] private bool userLoggedIn=false;
+    
+    public event EventHandler? LoginSuccess;
     
     //Dto
     [ObservableProperty] private string _email;
     [ObservableProperty] private string _password;
     
     private UserService userService;
-    public LoginViewModel()
+    public LoginViewModel(EventHandler? onLoginSuccess)
     {
         userService = Locator.Current.GetService<UserService>() ?? throw new InvalidOperationException();
+        LoginSuccess = onLoginSuccess;
     }
    
     [RelayCommand]
@@ -47,6 +53,8 @@ public partial class LoginViewModel : ViewModelBase
         try
         {
             await userService.LoginAsync(login);
+            userLoggedIn = true;
+            LoginSuccess?.Invoke(this, EventArgs.Empty);
         }
         catch (Exception e)
         {
@@ -77,4 +85,5 @@ public partial class LoginViewModel : ViewModelBase
         }
         return true;
     }
+    
 }

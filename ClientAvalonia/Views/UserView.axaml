@@ -1,8 +1,76 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:ClientAvalonia.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ClientAvalonia.Views.UserView">
-    <TextBlock> User Profile! </TextBlock> 
+             x:Class="ClientAvalonia.Views.UserView"
+             x:DataType="vm:UserViewModel">
+    <Panel>
+        <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" CornerRadius="5" Width="120" Height="20" BorderThickness="0" Background="#9B71E1" BoxShadow="2 2 2 2 Black">
+          <TextBlock HorizontalAlignment="Center" Foreground="#523681">Profilo Utente</TextBlock>
+        </Border>
+        
+        <Border Background="#4C4C4C" Width="675" Height="450" CornerRadius="10" BoxShadow="5 5 5 5 Black">
+            
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Background="Transparent">
+                <!-- <Image Source="" ></Image> da usare comn un immagine effettiva -->
+                
+                <PathIcon Data="{StaticResource personregular}" Foreground="#313131" Width="100" Height="100" Margin="0 0 0 15"/>
+                
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
+                        <TextBox Width="230" Name="nameBox" VerticalAlignment="Center" IsEnabled="{Binding EditEnableName}"  Text="{Binding User.Name, Mode=TwoWay }" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" Foreground="{Binding NameColor}"/>
+                        <Button 
+                            VerticalAlignment="Center"
+                            Background="Transparent" 
+                            Margin="2 4 0 5"
+                            Command="{Binding toggleEditNameCommand}"> 
+                            <PathIcon Data="{StaticResource editregular}"></PathIcon>
+                        </Button>   
+                </StackPanel>
+                
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
+                    <TextBox Width="230" VerticalAlignment="Center" IsEnabled="{Binding EditEnableSurname}" Text="{Binding User.Surname, Mode=TwoWay}" HorizontalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" Foreground="{Binding SurnameColor}"/>
+                    <Button 
+                        VerticalAlignment="Center"
+                        Background="Transparent" 
+                        Margin="2 4 2 5"
+                        Command="{Binding toggleEditSurnameCommand}"> 
+                        <PathIcon Data="{StaticResource editregular}"></PathIcon>
+                    </Button>   
+                </StackPanel>
+                
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
+                    <TextBox Width="230" VerticalAlignment="Center" IsEnabled="{Binding EditEnableMail}" Text="{Binding User.Email, Mode=TwoWay}" HorizontalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" Foreground="{Binding MailColor}"/>
+                    <Button 
+                        VerticalAlignment="Center"
+                        Background="Transparent" 
+                        Margin="2 4 2 5"
+                        Command="{Binding toggleEditMailCommand}"> 
+                        <PathIcon Data="{StaticResource editregular}"></PathIcon>
+                    </Button>   
+                </StackPanel>
+                
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
+                    <TextBox Width="230" VerticalAlignment="Center" IsEnabled="{Binding EditEnableDate}" Text="{Binding User.DateOfBirth, Mode=TwoWay}" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" Foreground="{Binding DateColor}"/>
+                    <Button 
+                        VerticalAlignment="Center"
+                        Background="Transparent" 
+                        Margin="2 4 2 5"
+                        Command="{Binding toggleEditDateCommand}">  <!-- Command="{Binding }" -->
+                        <PathIcon Data="{StaticResource editregular}"></PathIcon>
+                    </Button>   
+                </StackPanel>
+                
+                <Button 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right"
+                    Background="#523681" 
+                    Margin="2 4 2 5"
+                    Command="{Binding saveEditCommand}">  <!-- Command="{Binding }" -->
+                    salva modifiche
+                </Button>   
+            </StackPanel>
+        </Border>
+    </Panel>
 </UserControl>
