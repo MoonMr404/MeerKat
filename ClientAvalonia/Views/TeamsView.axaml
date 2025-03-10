@@ -22,7 +22,7 @@
                     <TextBlock HorizontalAlignment="Center" Foreground="#523681">I tuoi Team</TextBlock>
                 </Border>
            
-                <ListBox Margin="0 40 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding TeamList2}">
+                <ListBox Margin="0 40 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding teamList}">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:TeamTemplate}">
                             <StackPanel Orientation="Horizontal">
@@ -40,6 +40,8 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
                 
+                <Button VerticalAlignment="Center" Height="50" Width="50" Foreground=  "#523681" Background="#9B71E1" CornerRadius="10" Command="{Binding addTeamCommand}">
+                </Button>
             </Panel> 
         </Border>
     </Panel>

@@ -18,25 +18,24 @@ public partial class TeamsViewModel : ViewModelBase
  
     public ObservableCollection<TeamTemplate> teamList { get; set; } = new();
     
-    public ObservableCollection<TeamTemplate> TeamList2 { get; set; } = new()
-    {
-        new TeamTemplate(new TeamDto(){ Id=Guid.NewGuid(), Name="team 1", Description = "Primo Team", ManagerId =Guid.NewGuid()}),
-        new TeamTemplate(new TeamDto(){ Id=Guid.NewGuid(), Name="team 1", Description = "Primo Team", ManagerId =Guid.NewGuid()}),
-    };
-    
     private UserService userService;
+    private TeamService teamService;
+    private UserDto userDto;
     public TeamsViewModel()
     {
         userService = Locator.Current.GetService<UserService>() ?? throw new InvalidOperationException();
+        teamService = Locator.Current.GetService<TeamService>() ?? throw new InvalidOperationException();
         LoadUserAsync();
     }
     
     public async Task LoadUserAsync()
     {
-        userService.GetUserSelfAsync();
+        userService.GetUserSelfAsync(true);
         var user= await userService.GetUserSelfAsync(true);
+        userDto = user;
         Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
         {
+            teamList.Clear();
             foreach (TeamDto team in user.ManagedTeams)
             {
                 teamList.Add(new TeamTemplate(team));
@@ -47,6 +46,29 @@ public partial class TeamsViewModel : ViewModelBase
             }
         });
     } 
+    
+    [RelayCommand]
+    public async void addTeam()
+    {
+        TeamDto team = new TeamDto()
+        {
+            Id = Guid.NewGuid(),
+            Name = "team 1",
+            Description = "Primo Team",
+            ManagerId = userDto.Id,
+            Deadline = DateTime.Now.AddHours(1)
+        };
+
+        try
+        {
+            await teamService.CreateTeamAsync(team);
+            await LoadUserAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
    
 }
 
@@ -64,5 +86,4 @@ public partial class TeamTemplate
     {
       
     }
-    
 }

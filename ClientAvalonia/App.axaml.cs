@@ -32,6 +32,7 @@ public partial class App : Application
         string apiUrl = "http://localhost:5149";
         
         Locator.CurrentMutable.Register(() => new UserService(client,apiUrl), typeof(UserService));
+        Locator.CurrentMutable.Register(() => new TeamService(client,apiUrl), typeof(TeamService));
     }
 
     public override async void OnFrameworkInitializationCompleted()
