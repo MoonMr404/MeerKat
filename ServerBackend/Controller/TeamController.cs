@@ -99,4 +99,20 @@ public class TeamController(
 
         return NoContent(); // 204
     }
+
+    // POST: api/Team/addMember
+    [HttpPost("{teamId}/addMember/{email}")]
+    [Authorize]
+    public async Task<IActionResult> AddMemberToTeam(string email, Guid teamId)
+    {
+        var team = await meerkatContext.Teams.FindAsync(teamId);
+        if (team == null) return BadRequest(); //400
+        var member = await meerkatContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+        if (member == null) return BadRequest(); //400
+        if (team.Members == null) team.Members = new List<User>();
+        team.Members.Add(member);
+        await meerkatContext.SaveChangesAsync();
+        return NoContent(); // 204
+    }
+    
 }

@@ -16,7 +16,8 @@ namespace ClientAvalonia.ViewModels;
 public partial class TeamsViewModel : ViewModelBase
 {
  
-    public ObservableCollection<TeamTemplate> teamList { get; set; } = new();
+    public ObservableCollection<TeamTemplate> managedTeamsList { get; set; } = new();
+    public ObservableCollection<TeamTemplate> memberOfTeamsList { get; set; } = new();
     
     private UserService userService;
     private TeamService teamService;
@@ -35,14 +36,15 @@ public partial class TeamsViewModel : ViewModelBase
         userDto = user;
         Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
         {
-            teamList.Clear();
+            managedTeamsList.Clear();
+            memberOfTeamsList.Clear();
             foreach (TeamDto team in user.ManagedTeams)
             {
-                teamList.Add(new TeamTemplate(team));
+                managedTeamsList.Add(new TeamTemplate(team));
             }
             foreach (TeamDto team in user.MemberOfTeams)
             {
-                teamList.Add(new TeamTemplate(team));
+                memberOfTeamsList.Add(new TeamTemplate(team));
             }
         });
     } 
