@@ -26,7 +26,8 @@ public partial class MainWindowViewModel : ViewModelBase
      public ObservableCollection<PageListTemplate> Pages { get; } = new()
      {
           new PageListTemplate(typeof(UserViewModel), "personregular"),
-          new PageListTemplate(typeof(TeamsViewModel), "peoplecommunityregular")
+          new PageListTemplate(typeof(TeamsViewModel), "peoplecommunityregular"),
+          new PageListTemplate(typeof(TaskManagementViewModel), "peoplecommunityregular")
      };
      
      partial void OnSelectedListItemChanged(PageListTemplate? value)

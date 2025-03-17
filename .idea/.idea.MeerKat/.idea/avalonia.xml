@@ -8,11 +8,16 @@
         <entry key="ClientAvalonia/Views/AuthenticationWindow.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/AuthenticationWindowView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/AuthentificationWindow.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
+        <entry key="ClientAvalonia/Views/CreateTaskListView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
+        <entry key="ClientAvalonia/Views/CreateTaskView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/EditTeamView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/InfoTeamView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/LoginView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/MainWindow.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/RegistrationView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
+        <entry key="ClientAvalonia/Views/TakmangementView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
+        <entry key="ClientAvalonia/Views/TaskManagementView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
+        <entry key="ClientAvalonia/Views/TaskMangementView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/TeamsView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/UserView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
       </map>

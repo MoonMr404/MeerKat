@@ -48,15 +48,35 @@ public partial class InfoTeamViewModel : ViewModelBase
         if (DeadlineColor == "#717171") DeadlineColor = "#313131";
         else DeadlineColor = "#717171";
     }
+    
+    [RelayCommand]
+    public void toggleAddMember()
+    {
+        EditDeadline = !EditDeadline;
+        if (DeadlineColor == "#717171") DeadlineColor = "#313131";
+        else DeadlineColor = "#717171";
+    }
+    
+    [RelayCommand]
+    private void saveEdit()
+    {
+        //userService.UpdateUserAsync(new UserDto(){Name=_user.Name, Email =_user.Email , Surname =_user.Surname , Password = _user.Password , Id = _user.Id, DateOfBirth = _user.DateOfBirth});
+    }
+    
 }
 
-
-public class UserTemplate
+public partial class UserTemplate
 {
     public UserDto user { get; }
     public UserTemplate(UserDto user)
     {
         this.user = user;
+    }
+    
+    [RelayCommand]
+    public void toggleDeleteMember()
+    {
+        
     }
     
 }
