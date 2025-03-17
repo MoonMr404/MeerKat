@@ -1,0 +1,77 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClientAvalonia.Views.TaskManagementView"
+             xmlns:vm="using:ClientAvalonia.ViewModels"
+             x:DataType="vm:TaskManagementViewModel">
+    
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:TaskManagementViewModel/>
+    </Design.DataContext>
+    
+    <Panel>
+        <Border VerticalAlignment="Stretch" Background="Transparent" BackgroundSizing="CenterBorder" CornerRadius="10" BoxShadow="2 2 2 2 Black">
+            <Panel> 
+                <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" CornerRadius="5" Width="120" Height="20" BorderThickness="0" Background="#9B71E1" BoxShadow="2 2 2 2 Black">
+                     <TextBlock HorizontalAlignment="Center" Foreground="#523681">Gestione Task</TextBlock>
+                </Border>
+        
+                 <Panel Width="675" Height="450" Background="Transparent">
+                     <ListBox Margin="0 40 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding taskListList2}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" >
+                        
+                         <ListBox.ItemsPanel>
+                             <ItemsPanelTemplate>
+                                 <StackPanel Orientation="Horizontal" />
+                             </ItemsPanelTemplate>
+                         </ListBox.ItemsPanel>
+                         
+                         <ListBox.ItemTemplate>
+                         <DataTemplate DataType="{x:Type vm:TaskListTemplate}">
+                            <StackPanel Orientation="Horizontal">
+                            
+                                <Border MinHeight="190"  MaxHeight="400" Width="170" Background="#9B71E1" CornerRadius="10">
+                                    <StackPanel  MinHeight="190"  MaxHeight="400" Width="170" Spacing="10" Orientation="Vertical">
+                                            <StackPanel Width="170" Spacing="10" Orientation="Horizontal">
+                                                <TextBlock Margin="5 0 0 0" Foreground="#523681" Text="{Binding taskLists.Name}"/>
+                                                <Button Background="#523681" Margin="64 2 3 2" Padding="5 5 5 5" HorizontalAlignment="Left">
+                                                    <PathIcon Height="10" Width="10"  Data="{StaticResource addregular}"></PathIcon>
+                                                </Button>  
+                                            </StackPanel>
+                                        
+                                        <TextBlock Margin="1 0 0 0" Foreground="#523681"   Text="{Binding taskLists.Description}"/>
+                                        
+                                        <ListBox Margin="0 10 0 0" BorderBrush="#523681" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding  taskTemplates}">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate DataType="{x:Type vm:TaskTemplate}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Border Height="40" MinWidth="120" MaxWidth="170" Padding="0 0 10 0" Background="#523681" CornerRadius="5" Margin="0 0 0 0">
+                                                            <StackPanel Orientation="Horizontal" Spacing="15">
+                                                                <TextBlock VerticalAlignment="Center" Margin="5 0 0 0" Foreground="White" Text="{Binding task.Name}"/>
+                                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5 0 0 0" Foreground="#9B71E1" Height="10" Text="{Binding task.Deadline}"/>
+                                                            </StackPanel>
+                                                        </Border>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                        
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                         </DataTemplate>
+                     </ListBox.ItemTemplate>
+                    </ListBox>
+                </Panel>
+                
+                <Button  CornerRadius="10" Background="#9B71E1" Margin="0 2 3 2" Padding="10 10 10 10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <PathIcon Height="25" Width="25"  Data="{StaticResource addregular}"></PathIcon>
+                </Button>  
+            </Panel>
+        </Border>
+    </Panel>
+</UserControl>
+

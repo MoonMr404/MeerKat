@@ -1,0 +1,44 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:ClientAvalonia.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ClientAvalonia.Views.CreateTaskListView"
+             x:DataType="vm:CreateTaskListViewModel">
+    
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:CreateTaskListViewModel/>
+    </Design.DataContext>
+    
+    <Panel>
+        <Border Background="#4C4C4C" Width="375" Height="350" CornerRadius="10" BoxShadow="5 5 5 5 Black">
+            <StackPanel  VerticalAlignment="Center" Orientation="Vertical" Background="Transparent" Spacing="50">
+                <!-- <Image Source="" ></Image> da usare comn un immagine effettiva -->
+                <TextBlock Margin="25 0 0 0" Foreground="#9B71E1"> Crea Una Nuova TaskList</TextBlock>
+                
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock> Nome:</TextBlock>
+                    <TextBox Width="230" Name="nameBox" VerticalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center"/>
+                </StackPanel>
+                
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock> Descrizione:</TextBlock>
+                    <TextBox Width="230" Name="DescriptionBox" VerticalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center"/>
+                </StackPanel>
+                
+                <Button 
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    Background="#523681"
+                    Margin="0 0 50 0">  <!-- Command="{Binding }" -->
+                    salva modifiche
+                </Button>   
+                
+            </StackPanel>
+        </Border>
+    </Panel>
+    
+</UserControl>

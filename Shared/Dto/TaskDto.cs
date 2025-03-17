@@ -8,4 +8,5 @@ public class TaskDto
     public required Guid TaskListId { get; set; }
     public TaskListDto? TaskList { get; set; }
     public required DateOnly Deadline { get; set; }
+    
 }

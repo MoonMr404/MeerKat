@@ -13,7 +13,7 @@
         
         <Border Background="#4C4C4C" Width="675" Height="450" CornerRadius="10" BoxShadow="5 5 5 5 Black">
             <Panel Width="675" Height="450" Background="Transparent">
-            <StackPanel Orientation="Vertical" Background="Transparent" Margin="20 10 0 0">
+              <StackPanel Orientation="Vertical" Background="Transparent" Margin="20 10 0 0">
                 
                 <TextBlock Text="Nome:" Foreground="#313131" Background="Transparent"/>   
                 <StackPanel Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
@@ -29,10 +29,10 @@
                 
                 <TextBlock Text="Descrizione:" Foreground="#313131" Background="Transparent"/>
                 <StackPanel Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
-                    <TextBox Width="230" VerticalAlignment="Center" IsEnabled="{Binding EditDescription}" Text="{Binding Team.Description}" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" Foreground="{Binding DescriptionColor}"/>
+                    <TextBox MinHeight="100" MaxHeight="300" Width="230" VerticalAlignment="Center" IsEnabled="{Binding EditDescription}" Text="{Binding Team.Description}" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" Foreground="{Binding DescriptionColor}"/>
                     <Button 
-                        VerticalAlignment="Center"
-                        Background="Transparent" 
+                        VerticalAlignment="Top"
+                        Background="Transparent"
                         Margin="2 4 2 5"
                         Command="{Binding toggleEditDescriptionCommand}">  <!-- Command="{Binding }" -->
                         <PathIcon Data="{StaticResource editregular}"></PathIcon>
@@ -51,23 +51,47 @@
                     </Button>   
                 </StackPanel>
                 
-            </StackPanel>
+             </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="10 10 150 10">
-                    <TextBlock Text="NomeTeam" Foreground="#313131" Background="Transparent"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock  Text="membri del team" Foreground="#313131" Background="Transparent" VerticalAlignment="Center"/>
+                    
+                    <Button Background="Transparent" Margin="20 2 2 2" HorizontalAlignment="Right" Command="{Binding toggleAddMemberCommand}"> 
+                        <PathIcon Height="10" Width="10" Data="{StaticResource addregular}"></PathIcon>
+                    </Button>   
+                    </StackPanel>
+                    
                     <ListBox Margin="0 40 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding members}">
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="{x:Type vm:UserTemplate}">
                                 <StackPanel Orientation="Horizontal">
                                     <Border Height="30" Width="150" Background="#9B71E1" CornerRadius="10">
                                         <StackPanel Spacing="10" Orientation="Horizontal">
+                                            
                                             <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding user.Name}"/>
+                                            
+                                            <Button Background="Transparent"  Margin="5 2 2 2" Padding="3 0 3 0" HorizontalAlignment="Right" Command="{Binding toggleDeleteMemberCommand}">
+                                                 <PathIcon Height="10" Width="10"  Data="{StaticResource deleteregular}"></PathIcon>
+                                            </Button>   
+                                            
                                         </StackPanel>
                                     </Border>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
+                    
                 </StackPanel>
+                
+                <Button 
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    Background="#523681" 
+                    Margin="2 4 10 10"
+                    Command="{Binding saveEditCommand}">  
+                    salva modifiche
+                </Button>   
+                
             </Panel>
         </Border>
     </Panel>
