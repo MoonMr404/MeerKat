@@ -1,0 +1,2 @@
+﻿GET {{url}}/api/TaskList/team/9d4d7950-e5e3-41c3-b6b1-980344cb5a77
+Authorization: Bearer {{authToken}}

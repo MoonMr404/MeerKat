@@ -33,6 +33,9 @@
                                         <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding team.Description}"></TextBlock>
                                     </StackPanel>
                                 </Border>
+                                    <Button VerticalAlignment="Center" Height="40" Width="50" Foreground=  "#523681" Background="#9B71E1" CornerRadius="10" Command="{Binding selectTeamCommand}">
+                                        <PathIcon Data="{StaticResource linehorizontal3regular}"/>
+                                    </Button>
                                     <Button VerticalAlignment="Center" Height="40" Width="50" Foreground=  "#523681" Background="#9B71E1" CornerRadius="10" Command="{Binding editTeamCommand}">
                                         <PathIcon Data="{StaticResource editregular}"/>
                                     </Button>
@@ -50,8 +53,8 @@
                                             <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding team.Description}"></TextBlock>
                                         </StackPanel>
                                     </Border>
-                                    <Button VerticalAlignment="Center" Height="40" Width="50" Foreground=  "#523681" Background="#9B71E1" CornerRadius="10" Command="{Binding editTeamCommand}">
-                                        <PathIcon Data="{StaticResource editregular}"/>
+                                    <Button VerticalAlignment="Center" Height="40" Width="50" Foreground=  "#523681" Background="#9B71E1" CornerRadius="10" Command="{Binding selectTeamCommand}">
+                                        <PathIcon Data="{StaticResource linehorizontal3regular}"/>
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>

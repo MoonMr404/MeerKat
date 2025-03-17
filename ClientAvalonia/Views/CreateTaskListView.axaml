@@ -14,28 +14,33 @@
     </Design.DataContext>
     
     <Panel>
-        <Border Background="#4C4C4C" Width="375" Height="350" CornerRadius="10" BoxShadow="5 5 5 5 Black">
-            <StackPanel  VerticalAlignment="Center" Orientation="Vertical" Background="Transparent" Spacing="50">
+        <Border Background="#4C4C4C" Width="375" Height="300" CornerRadius="10" BoxShadow="5 5 5 5 Black">
+            <StackPanel Orientation="Vertical" Background="Transparent" Spacing="20">
                 <!-- <Image Source="" ></Image> da usare comn un immagine effettiva -->
-                <TextBlock Margin="25 0 0 0" Foreground="#9B71E1"> Crea Una Nuova TaskList</TextBlock>
+                <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0" Foreground="#9B71E1" FontSize="20"> Crea Una Nuova TaskList</TextBlock>
                 
                 <StackPanel HorizontalAlignment="Center">
                     <TextBlock> Nome:</TextBlock>
-                    <TextBox Width="230" Name="nameBox" VerticalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center"/>
+                    <TextBox Width="230" Name="NamePuBox" VerticalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center"/>
                 </StackPanel>
                 
                 <StackPanel HorizontalAlignment="Center">
                     <TextBlock> Descrizione:</TextBlock>
-                    <TextBox Width="230" Name="DescriptionBox" VerticalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center"/>
+                    <TextBox Width="230"  Height="70"  Name="DescriptionPuBox" VerticalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center"/>
                 </StackPanel>
                 
-                <Button 
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Right"
-                    Background="#523681"
-                    Margin="0 0 50 0">  <!-- Command="{Binding }" -->
-                    salva modifiche
-                </Button>   
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button 
+                        Background="#523681"
+                        Margin="0 0 50 0">  <!-- Command="{Binding }" -->
+                        Annulla
+                    </Button>   
+                    <Button 
+                        Background="#523681"
+                        Margin="0 0 50 0">  <!-- Command="{Binding }" -->
+                        Salva
+                    </Button>   
+                </StackPanel>
                 
             </StackPanel>
         </Border>

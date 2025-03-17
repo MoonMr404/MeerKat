@@ -55,7 +55,7 @@
                        <ListBox Background="Transparent" 
                                 ItemsSource="{Binding Pages}"
                                 SelectedItem="{Binding SelectedListItem}">
-                        <ListBox.ItemTemplate>
+                           <ListBox.ItemTemplate>
                             <DataTemplate DataType="{x:Type vm:PageListTemplate}">
                                 <StackPanel Spacing="15" Orientation="Horizontal">
                                     <PathIcon Data="{Binding ListItemIcon}" ></PathIcon>

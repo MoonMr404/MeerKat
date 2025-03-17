@@ -15,6 +15,7 @@ public class Task
     [Required]
     [MaxLength(50)] 
     public string Description { get; set; }
+    public string Status { get; set; }
     public Guid TaskListId { get; set; }
     public TaskList? TaskList { get; set; }
     
@@ -23,11 +24,12 @@ public class Task
     
     public Task() { Id = Guid.NewGuid(); }
 
-    public Task(string name, string description,Guid taskListId, DateOnly deadline,  TaskList? taskList = null)
+    public Task(string name, string description,Guid taskListId, String status, DateOnly deadline,  TaskList? taskList = null)
     {
         Id = Guid.NewGuid();
         Name = name;
         Description = description;
+        Status = status;
         Deadline = deadline;
         TaskListId = taskListId;
         TaskList = taskList;
@@ -40,6 +42,7 @@ public class Task
         {
             Id = task.Id,
             Name = task.Name,
+            Status = task.Status,
             Description = task.Description,
             Deadline = task.Deadline,
             TaskListId = task.TaskListId,

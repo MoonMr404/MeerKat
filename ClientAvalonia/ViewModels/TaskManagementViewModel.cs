@@ -4,34 +4,45 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices.JavaScript;
+using System.Threading.Tasks;
+using ClientAvalonia.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Shared.Dto;
+using Splat;
 
 namespace ClientAvalonia.ViewModels;
 
-public partial class TaskManagementViewModel : ViewModelBase
-{
-    
- 
-    public ObservableCollection<TaskDto> taskList { get; set; } = new();
+public partial class TaskManagementViewModel : ViewModelBase {
     public ObservableCollection<TaskListTemplate> taskListList { get; set; } = new();
     
-    
-    public static ObservableCollection<TaskDto> taskList2 { get; set; } = new()
+    private UserService userService;
+    private TeamService teamService;
+    private TaskListService taskListService;
+    private UserDto userDto;
+    private MainWindowViewModel mainWindowViewModel;
+
+    public TaskManagementViewModel(MainWindowViewModel mainWindowViewModel)
     {
-        new TaskDto(){ Id = new Guid(), Name = "Task 1", Description = "task d'esempio numero 1", TaskListId = new Guid(), Deadline = DateOnly.MaxValue},
-        new TaskDto(){ Id = new Guid(), Name = "Task 2", Description = "task d'esempio numero 2", TaskListId = new Guid(), Deadline = DateOnly.MaxValue},
-    };
+        userService = Locator.Current.GetService<UserService>() ?? throw new InvalidOperationException();
+        teamService = Locator.Current.GetService<TeamService>() ?? throw new InvalidOperationException();
+        taskListService = Locator.Current.GetService<TaskListService>() ?? throw new InvalidOperationException();
+        this.mainWindowViewModel = mainWindowViewModel;
+        LoadTasksAsync();
+    }
     
-    public ObservableCollection<TaskListTemplate> taskListList2 { get; set; } = new()
+    public async Task LoadTasksAsync()
     {
-        new TaskListTemplate(new TaskListDto()
-            { Id = new Guid(), Name = "Tasklist 1", Description = "Lista di task numero 1", TeamId = Guid.NewGuid(), Tasks = taskList2}),
-        new TaskListTemplate(new TaskListDto()
-            { Id = new Guid(), Name = "Tasklist 2", Description = "Lista di task numero 2", TeamId = Guid.NewGuid(), Tasks = null}),
-    };
-    
+        var taskLists = await taskListService.GetTaskListsAsync(true);
+        Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            taskListList.Clear();
+            foreach (TaskListDto taskList in taskLists)
+            {
+                taskListList.Add(new TaskListTemplate(taskList));
+            }
+        });
+    } 
 }
 
 public partial class TaskListTemplate : ObservableObject

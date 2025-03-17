@@ -41,6 +41,7 @@ public class TaskController(
     [HttpPost]
     public async Task<ActionResult<TaskDto>> CreateTask([FromBody] Models.Task task)
     {
+        task.Status = "Da completare";
         meerkatContext.Task.Add(task);
         if(!ModelState.IsValid) return BadRequest(ModelState);
         await meerkatContext.SaveChangesAsync();
@@ -59,7 +60,7 @@ public class TaskController(
     }
     
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteUser(Guid id)
+    public async Task<IActionResult> DeleteTask(Guid id)
     {
         var task = await meerkatContext.Task.FindAsync(id);
 
@@ -69,5 +70,26 @@ public class TaskController(
         await meerkatContext.SaveChangesAsync();
         
         return NoContent(); // 204
+    }
+    
+    [HttpGet("complete/{id}")]
+    public async Task<ActionResult<TaskDto>> CompleteTask(Guid id)
+    {
+        var task = await meerkatContext.Task.FindAsync(id);
+        if(task == null) return NotFound();
+        var today = DateOnly.FromDateTime(DateTime.Now);
+        if (task.Deadline < today)
+        {
+            task.Status = "Consegnata in ritardo";
+        }
+        else
+        {
+            task.Status = "Consegnata";
+        }
+
+        meerkatContext.Task.Update(task);
+        if(!ModelState.IsValid) return BadRequest(ModelState);
+        await meerkatContext.SaveChangesAsync();
+        return Ok(Models.Task.ToDto(task));
     }
 }

@@ -29,7 +29,7 @@ public partial class UserViewModel : ViewModelBase
 
 
     private UserService userService;
-    public UserViewModel()
+    public UserViewModel(MainWindowViewModel mainWindowViewModel)
     {
         userService = Locator.Current.GetService<UserService>() ?? throw new InvalidOperationException();
         LoadUserAsync();

@@ -22,10 +22,12 @@ public partial class TeamsViewModel : ViewModelBase
     private UserService userService;
     private TeamService teamService;
     private UserDto userDto;
-    public TeamsViewModel()
+    private MainWindowViewModel mainWindowViewModel;
+    public TeamsViewModel(MainWindowViewModel mainWindowViewModel)
     {
         userService = Locator.Current.GetService<UserService>() ?? throw new InvalidOperationException();
         teamService = Locator.Current.GetService<TeamService>() ?? throw new InvalidOperationException();
+        this.mainWindowViewModel = mainWindowViewModel;
         LoadUserAsync();
     }
     
@@ -40,11 +42,11 @@ public partial class TeamsViewModel : ViewModelBase
             memberOfTeamsList.Clear();
             foreach (TeamDto team in user.ManagedTeams)
             {
-                managedTeamsList.Add(new TeamTemplate(team));
+                managedTeamsList.Add(new TeamTemplate(team, mainWindowViewModel));
             }
             foreach (TeamDto team in user.MemberOfTeams)
             {
-                memberOfTeamsList.Add(new TeamTemplate(team));
+                memberOfTeamsList.Add(new TeamTemplate(team, mainWindowViewModel));
             }
         });
     } 
@@ -78,14 +80,24 @@ public partial class TeamsViewModel : ViewModelBase
 public partial class TeamTemplate
 {
     public TeamDto team { get; }
-    public TeamTemplate(TeamDto team)
+    public MainWindowViewModel mainWindowViewModel { get; }
+    public TeamTemplate(TeamDto team, MainWindowViewModel mainWindowViewModel)
     {
         this.team = team;
+        this.mainWindowViewModel = mainWindowViewModel;
     }
     
     [RelayCommand]
     public void editTeam()
     {
       
+    }
+    
+    [RelayCommand]
+    public void selectTeam()
+    {
+        mainWindowViewModel.SelectedTeam = team;
+        mainWindowViewModel.SelectedListItem =
+            mainWindowViewModel.Pages.Where(page => page.ModelType == typeof(TaskManagementViewModel)).First();
     }
 }

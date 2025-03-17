@@ -1,0 +1,9 @@
+﻿POST {{url}}/api/TaskList
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "name" : "Task di Michela",
+  "description" : "Le task di Michela",
+  "teamId" : "9d4d7950-e5e3-41c3-b6b1-980344cb5a77"
+}

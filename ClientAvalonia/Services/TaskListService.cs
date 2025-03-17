@@ -29,6 +29,19 @@ public class TaskListService(HttpClient httpClient, string apiBaseUrl)
             return null;
         }
     }
+    
+    // GET: api/TaskList/team/{id}
+    public async Task<IEnumerable<TaskListDto>> GetTaskListByTeamAsync(Guid teamId, bool nested = false)
+    {
+        try
+        {
+            return await httpClient.GetFromJsonAsync<IEnumerable<TaskListDto>>($"{_baseUrl}/team/{teamId}?nested={nested}");
+        }
+        catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            return null;
+        }
+    }
 
     // POST: api/TaskList
     public async Task<TaskListDto> CreateTaskListAsync(TaskListDto taskList)

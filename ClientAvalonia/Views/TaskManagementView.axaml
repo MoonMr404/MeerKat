@@ -21,7 +21,7 @@
                 </Border>
         
                  <Panel Width="675" Height="450" Background="Transparent">
-                     <ListBox Margin="0 40 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding taskListList2}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" >
+                     <ListBox Margin="0 40 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding taskListList}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" >
                         
                          <ListBox.ItemsPanel>
                              <ItemsPanelTemplate>
@@ -67,11 +67,48 @@
                     </ListBox>
                 </Panel>
                 
-                <Button  CornerRadius="10" Background="#9B71E1" Margin="0 2 3 2" Padding="10 10 10 10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Button Name="CreateTaskListButton" CornerRadius="10" Background="#9B71E1" Margin="0 2 3 2" Padding="10 10 10 10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                     <PathIcon Height="25" Width="25"  Data="{StaticResource addregular}"></PathIcon>
                 </Button>  
             </Panel>
         </Border>
+        
+        <Popup Name="CreateTaskList" IsOpen="False" Placement="Center">
+            <Panel>
+                <Border Background="#4C4C4C" Width="375" Height="300" CornerRadius="10" BoxShadow="5 5 5 5 Black">
+                    <StackPanel Orientation="Vertical" Background="Transparent" Spacing="20">
+                        <!-- <Image Source="" ></Image> da usare comn un immagine effettiva -->
+                        <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0" Foreground="#9B71E1" FontSize="20"> Crea Una Nuova TaskList</TextBlock>
+                
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock> Nome:</TextBlock>
+                            <TextBox Width="230" Name="NamePuBox" VerticalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock> Descrizione:</TextBlock>
+                            <TextBox Width="230"  Height="70" TextWrapping="Wrap" Name="DescriptionPuBox" VerticalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" />
+                        </StackPanel>
+                
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button 
+                                Name="CancelPuButton"
+                                Background="#523681"
+                                Margin="0 0 50 0">
+                                Annulla
+                            </Button>   
+                            <Button 
+                                Name="SavePuButton"
+                                Background="#523681"
+                                Margin="0 0 50 0"> 
+                                Salva
+                            </Button>   
+                        </StackPanel>
+                
+                    </StackPanel>
+                </Border>
+            </Panel>
+        </Popup>
     </Panel>
 </UserControl>
 
