@@ -4,8 +4,8 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework> <!-- You can change this to net5.0, netcoreapp3.1, etc., if needed -->
     <OutputType>Library</OutputType>
-    <RootNamespace>UnitTests</RootNamespace> <!-- Replace with your desired namespace -->
-    <AssemblyName>UnitTests</AssemblyName> <!-- Replace with your desired assembly name -->
+    <RootNamespace>Testing</RootNamespace> <!-- Replace with your desired namespace -->
+    <AssemblyName>Testing</AssemblyName> <!-- Replace with your desired assembly name -->
     <LangVersion>latest</LangVersion> <!-- Use the latest C# language version -->
   </PropertyGroup>
 
