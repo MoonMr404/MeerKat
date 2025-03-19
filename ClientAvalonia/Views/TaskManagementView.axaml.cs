@@ -11,19 +11,23 @@ public partial class TaskManagementView : UserControl
     {
         InitializeComponent();
 
-        CreateTaskListButton.Click += CreateTaskListButtonClick;
-        CancelPuButton.Click += CancelPuButtonClick;
+        CreateTaskListButton.Click += (object sender, RoutedEventArgs e) => CreateTaskList.IsOpen = true;
+        PuTlCancelButton.Click += PuTlCancelButtonClick;
+        PuTCancelButton.Click += PuTCancelButtonClick;
     }
 
-    private void CancelPuButtonClick(object? sender, RoutedEventArgs e)
+    private void PuTlCancelButtonClick(object? sender, RoutedEventArgs e)
     {
         CreateTaskList.IsOpen = false;
-        NamePuBox.Text = string.Empty;
-        DescriptionPuBox.Text = string.Empty;
+        PuTlNameBox.Text = string.Empty;
+        PuTlDescriptionBox.Text = string.Empty;
     }
-
-    private void CreateTaskListButtonClick(object sender, RoutedEventArgs e)
+    
+    private void PuTCancelButtonClick(object? sender, RoutedEventArgs e)
     {
-        CreateTaskList.IsOpen = true;
+        CreateTask.IsOpen = false;
+        PuTNameBox.Text = string.Empty;
+        PuTDescriptionBox.Text = string.Empty;
+        PuTDatePicker.Text = string.Empty;
     }
 }

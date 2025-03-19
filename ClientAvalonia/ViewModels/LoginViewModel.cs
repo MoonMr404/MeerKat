@@ -23,8 +23,8 @@ public partial class LoginViewModel : ViewModelBase
     public event EventHandler? LoginSuccess;
     
     //Dto
-    [ObservableProperty] private string _email;
-    [ObservableProperty] private string _password;
+    [ObservableProperty] private string _email = "greenylie12@gmail.com";
+    [ObservableProperty] private string _password = "pollosacro";
     
     private UserService userService;
     public LoginViewModel(EventHandler? onLoginSuccess)
