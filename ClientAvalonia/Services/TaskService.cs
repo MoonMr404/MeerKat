@@ -67,4 +67,19 @@ public class TaskService(HttpClient httpClient, string apiBaseUrl)
         var response = await httpClient.DeleteAsync($"{_baseUrl}/{id}");
         response.EnsureSuccessStatusCode();
     }
+    
+    // GET: api/Task/complete/id
+    public async Task<TaskDto> CompleteTaskAsync(Guid id)
+    {
+        try
+        {
+            return await httpClient.GetFromJsonAsync<TaskDto>($"{_baseUrl}/complete/{id}")
+                   ?? throw new InvalidOperationException("Failed to deserialize the created task");
+            
+        }
+        catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            return null;
+        }
+    }
 }

@@ -52,8 +52,9 @@
                                                 <ListBox.ItemTemplate>
                                                     <DataTemplate DataType="{x:Type vm:TaskTemplate}">
                                                         <StackPanel Orientation="Horizontal">
-                                                            <Border Height="40" MinWidth="120" MaxWidth="170" Padding="0 0 10 0" Background="#523681" CornerRadius="5" Margin="0 0 0 0">
-                                                                <StackPanel Orientation="Horizontal" Spacing="15">
+                                                            <Border Height="40" MinWidth="120" MaxWidth="230" Padding="0 0 10 0" Background="#523681" CornerRadius="5" Margin="0 0 0 0">
+                                                                <StackPanel Orientation="Horizontal" Spacing="7">
+                                                                    <CheckBox Margin="7 0 0 0" IsThreeState="True" IsHitTestVisible="{Binding IsEnabled}" IsChecked="{Binding IsChecked}" Command="{Binding completeTaskCommand}"></CheckBox>
                                                                     <TextBlock VerticalAlignment="Center" Margin="5 0 0 0" Foreground="White" Text="{Binding task.Name}"/>
                                                                     <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5 0 0 0" Foreground="#9B71E1" Height="10" Text="{Binding task.Deadline}"/>
                                                                 </StackPanel>
@@ -82,7 +83,7 @@
                     
                     <TextBlock Text="Nome:" Foreground="#313131" Background="Transparent"/>   
                     <StackPanel Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
-                        <TextBox Width="230" VerticalAlignment="Center"    BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" />
+                        <TextBox Width="230" VerticalAlignment="Center"  Text="{Binding MainWindowViewModel.SelectedTeam.Name}"  BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" />
                             <Button 
                                 VerticalAlignment="Center"
                                 Background="Transparent" 
@@ -94,7 +95,7 @@
                     
                     <TextBlock Text="Descrizione:" Foreground="#313131" Background="Transparent"/>
                     <StackPanel Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
-                        <TextBox MinHeight="100" MaxHeight="300" Width="230" VerticalAlignment="Center"   BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" />
+                        <TextBox MinHeight="100" MaxHeight="300" Width="230" VerticalAlignment="Center" Text="{Binding MainWindowViewModel.SelectedTeam.Description}"  BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" />
                         <Button 
                             VerticalAlignment="Top"
                             Background="Transparent"
@@ -106,7 +107,7 @@
                     
                     <TextBlock Text="Data di Consegna:" Foreground="#313131" Background="Transparent"/>
                     <StackPanel Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
-                        <CalendarDatePicker Width="230" VerticalAlignment="Center"    HorizontalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" />
+                        <CalendarDatePicker Width="230" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" />
                         <Button 
                             VerticalAlignment="Center"
                             Background="Transparent" 
@@ -119,21 +120,23 @@
                  </StackPanel>
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="10 10 150 10">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock  Text="membri del team" Foreground="#313131" Background="Transparent" VerticalAlignment="Center"/>
+                        <TextBlock  Text="Membri del team" Foreground="#313131" Background="Transparent" VerticalAlignment="Center"/>
                         
                         <Button Background="Transparent" Margin="20 2 2 2" HorizontalAlignment="Right" > 
                             <PathIcon Height="10" Width="10" Data="{StaticResource addregular}"></PathIcon>
                         </Button>   
                         </StackPanel>
                         
-                        <ListBox Margin="0 40 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" >
+                        <ListBox Margin="0 40 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding membersList}" >
                             <ListBox.ItemTemplate>
                                 <DataTemplate DataType="{x:Type vm:UserTemplate}">
                                     <StackPanel Orientation="Horizontal">
                                         <Border Height="30" Width="150" Background="#9B71E1" CornerRadius="10">
-                                            <StackPanel Spacing="10" Orientation="Horizontal">
+                                            <StackPanel Spacing="4" Orientation="Horizontal">
                                                 
-                                                <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding user.Name}"/>
+                                                <TextBlock Margin="0 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding user.Name}"/>
+                                                <TextBlock Margin="0 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding user.Surname}"/>
+                                                <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding user.Email}"/>
                                                 
                                                 <Button Background="Transparent"  Margin="5 2 2 2" Padding="3 0 3 0" HorizontalAlignment="Right" Command="{Binding toggleDeleteMemberCommand}">
                                                      <PathIcon Height="10" Width="10"  Data="{StaticResource deleteregular}"></PathIcon>
@@ -154,7 +157,7 @@
                         Background="#523681" 
                         Margin="2 4 10 10"
                         >  
-                        salva modifiche
+                        Salva
                     </Button>   
                     
                 </Panel>

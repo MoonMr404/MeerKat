@@ -81,10 +81,12 @@ public partial class TeamTemplate
 {
     public TeamDto team { get; }
     public MainWindowViewModel mainWindowViewModel { get; }
+    public TeamService teamService { get; }
     public TeamTemplate(TeamDto team, MainWindowViewModel mainWindowViewModel)
     {
         this.team = team;
         this.mainWindowViewModel = mainWindowViewModel;
+        this.teamService = Locator.Current.GetService<TeamService>() ?? throw new InvalidOperationException();
     }
     
     [RelayCommand]
@@ -94,9 +96,10 @@ public partial class TeamTemplate
     }
     
     [RelayCommand]
-    public void selectTeam()
+    public async void selectTeam()
     {
-        mainWindowViewModel.SelectedTeam = team;
+        var teamNested = await teamService.GetTeamByIdAsync(team.Id, true);
+        mainWindowViewModel.SelectedTeam = teamNested;
         mainWindowViewModel.SelectedListItem =
             mainWindowViewModel.Pages.Where(page => page.ModelType == typeof(TaskManagementViewModel)).First();
     }

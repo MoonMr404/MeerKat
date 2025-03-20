@@ -16,12 +16,13 @@ namespace ClientAvalonia.ViewModels;
 
 public partial class TaskManagementViewModel : ViewModelBase {
     public ObservableCollection<TaskListTemplate> taskListList { get; set; } = new();
+    public ObservableCollection<UserTemplate> membersList { get; set; } = new();
     
     private UserService _userService;
     private TaskService _taskService;
     private TaskListService _taskListService;
     private UserDto _userDto;
-    private MainWindowViewModel _mainWindowViewModel;
+    [ObservableProperty] public MainWindowViewModel _mainWindowViewModel;
     
     [ObservableProperty] private string _taskListName;
     [ObservableProperty] private string _taskListDescription;
@@ -41,7 +42,10 @@ public partial class TaskManagementViewModel : ViewModelBase {
         _taskListService = Locator.Current.GetService<TaskListService>() ?? throw new InvalidOperationException();
         this._mainWindowViewModel = mainWindowViewModel;
         LoadTasksAsync();
+        LoadMembersAsync();
     }
+    
+    
 
     public async Task LoadUsersAsync()
     {
@@ -62,6 +66,18 @@ public partial class TaskManagementViewModel : ViewModelBase {
             foreach (TaskListDto taskList in taskLists)
             {
                 taskListList.Add(new TaskListTemplate(taskList, this));
+            }
+        });
+    } 
+    
+    public async Task LoadMembersAsync()
+    {
+        Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            membersList.Clear();
+            foreach (UserDto user in _mainWindowViewModel.SelectedTeam.Members)
+            {
+                membersList.Add(new UserTemplate(user));
             }
         });
     } 
@@ -97,7 +113,7 @@ public partial class TaskManagementViewModel : ViewModelBase {
             Name = TaskName,
             Description = TaskDescription,
             Deadline = TaskDeadline,
-            Status = "Da consegnare",
+            Status = "Da completare",
             TaskListId = _selectedTaskListDto.Id
         };
         try
@@ -127,9 +143,10 @@ public partial class TaskListTemplate : ObservableObject
         this.taskList = taskList;
         if (taskList.Tasks != null)
         {
-            foreach (TaskDto task in taskList.Tasks)
+            var tasksOrdered = taskList.Tasks.OrderBy(t => t.Status);
+            foreach (TaskDto task in tasksOrdered)
             {
-                taskTemplates.Add(new TaskTemplate(task));
+                taskTemplates.Add(new TaskTemplate(task,_taskManagementViewModel));
             }
         }
     }
@@ -152,15 +169,61 @@ public partial class TaskListTemplate : ObservableObject
 public partial class TaskTemplate : ObservableObject
 {
     public TaskDto task { get; }
-    public TaskTemplate(TaskDto task)
+    public String IsChecked { get; private set; }
+    public bool IsEnabled { get; private set; }
+    
+    private TaskService _taskService;
+    private TaskManagementViewModel _taskManagementViewModel;
+    public TaskTemplate(TaskDto task, TaskManagementViewModel taskManagementViewModel)
     {
         this.task  = task;
+        _taskService = Locator.Current.GetService<TaskService>() ?? throw new InvalidOperationException();
+        _taskManagementViewModel = taskManagementViewModel;
+
+        switch (task.Status)
+        {
+            case "Da completare":
+                IsEnabled = true;
+                IsChecked = "False";
+                break;
+            case "Consegnata":
+                IsEnabled = false;
+                IsChecked = "True";
+                break;
+            case "Consegnata in ritardo":
+                IsEnabled = false;
+                IsChecked = "{x:Null}";
+                break;
+        }
+    }
+
+    [RelayCommand]
+    public async void completeTask()
+    {
+        await _taskService.CompleteTaskAsync(task.Id);
+        await _taskManagementViewModel.LoadTasksAsync();
     }
     
     [RelayCommand]
     public void editTask()
     {
       
+    }
+    
+}
+
+public partial class UserTemplate : ObservableObject
+{
+    public UserDto user { get; }
+    public UserTemplate(UserDto user)
+    {
+        this.user = user;
+    }
+    
+    [RelayCommand]
+    public void toggleDeleteMember()
+    {
+        
     }
     
 }
