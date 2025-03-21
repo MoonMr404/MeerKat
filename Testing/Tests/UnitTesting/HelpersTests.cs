@@ -7,7 +7,7 @@ using NUnit.Framework;
 using ServerBackend.Helpers;
 using ServerBackend.Models;
 
-namespace UnitTesting.Tests.UnitTesting;
+namespace Testing.Tests.UnitTesting;
 
 [TestFixture]
 public class HelpersTests

@@ -14,6 +14,7 @@ public static class TeamValidator
         if (string.IsNullOrWhiteSpace(team.Name)) return false;
         if (team.ManagerId == Guid.Empty) return false;
         if (team.Deadline is not null && DateTime.Today > team.Deadline ) return false;
+        if (team.Description is not null && team.Description.Length > 500) return false;
 
         return true;
     }

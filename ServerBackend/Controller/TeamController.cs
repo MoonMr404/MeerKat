@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ServerBackend.Data;
 using ServerBackend.Helpers;
 using ServerBackend.Models;
+using ServerBackend.Validators;
 using Shared.Dto;
 
 namespace ServerBackend.Controller;
@@ -63,7 +64,7 @@ public class TeamController(
         
         team.Manager = manager;
 
-        if (!ModelState.IsValid) { return BadRequest(ModelState); } //400
+        if (!ModelState.IsValid || !await team.IsValid()) { return BadRequest(ModelState); } //400
         meerkatContext.Teams.Add(team);
         await meerkatContext.SaveChangesAsync();
 
@@ -77,7 +78,7 @@ public class TeamController(
     {
         if (!JwtHelper.IsAmongSelf(HttpContext.User,team.ManagerId) && !JwtHelper.IsAdmin(HttpContext.User)) return Unauthorized();
         meerkatContext.Teams.Update(team);
-        if (!ModelState.IsValid) { return BadRequest(ModelState); } //400
+        if (!ModelState.IsValid || !await team.IsValid()) { return BadRequest(ModelState); } //400
         await meerkatContext.SaveChangesAsync();
 
         return CreatedAtAction(nameof(GetTeamById), new { id = team.Id }, Team.ToDto(team)); // 201

@@ -12,7 +12,7 @@ using ServerBackend.Controller;
 using ServerBackend.Data;
 using ServerBackend.Models;
 using Shared.Dto;
-using UnitTesting;
+using Testing;
 using Task = System.Threading.Tasks.Task;
 
 public class UserControllerTests

@@ -3,10 +3,12 @@ using NUnit.Framework;
 using ServerBackend.Data;
 using ServerBackend.Models;
 using ServerBackend.Validators;
-using UnitTesting;
+using Testing;
 using Task = System.Threading.Tasks.Task;
 
-public class UserValidatorTests
+namespace Testing.Tests.UnitTesting;
+
+public class UserValidationTests
 {
     private MeerkatContext _context;
 
