@@ -1,8 +1,9 @@
 ﻿POST {{url}}/api/Team
+Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
   "name": "Pollosacro",
   "description": "Il pollo è sacro qui",
-  "managerId": "a986b437-0a27-4649-ad0b-abbbe532e09e"
+  "managerId": "6ced1c6e-b24f-42c2-933b-19f431931762"
 }

@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Define the target framework -->
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework> <!-- You can change this to net5.0, netcoreapp3.1, etc., if needed -->
+    <OutputType>Library</OutputType>
+    <RootNamespace>Testing</RootNamespace> <!-- Replace with your desired namespace -->
+    <AssemblyName>Testing</AssemblyName> <!-- Replace with your desired assembly name -->
+    <LangVersion>latest</LangVersion> <!-- Use the latest C# language version -->
+  </PropertyGroup>
+
+  <!-- Add references to NUnit and NUnit3TestAdapter -->
+  <ItemGroup>
+    <ProjectReference Include="..\ClientAvalonia\ClientAvalonia.csproj" />
+    <ProjectReference Include="..\ServerBackend\ServerBackend.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="NUnit" Version="4.3.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
+  </ItemGroup>
+
+  <!-- Optional: Define properties for test output -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors> <!-- Treat warnings as errors in Debug mode -->
+    <WarningsAsErrors>CS8019;CS8600;CS8602;CS8603</WarningsAsErrors> <!-- Specify specific warnings to treat as errors -->
+  </PropertyGroup>
+
+</Project>

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ServerBackend.Data;
 using ServerBackend.Helpers;
 using ServerBackend.Models;
+using ServerBackend.Validators;
 using Shared.Dto;
 
 namespace ServerBackend.Controller;
@@ -63,7 +64,7 @@ public class TeamController(
         
         team.Manager = manager;
 
-        if (!ModelState.IsValid) { return BadRequest(ModelState); } //400
+        if (!ModelState.IsValid || !await team.IsValid()) { return BadRequest(ModelState); } //400
         meerkatContext.Teams.Add(team);
         await meerkatContext.SaveChangesAsync();
 
@@ -77,7 +78,7 @@ public class TeamController(
     {
         if (!JwtHelper.IsAmongSelf(HttpContext.User,team.ManagerId) && !JwtHelper.IsAdmin(HttpContext.User)) return Unauthorized();
         meerkatContext.Teams.Update(team);
-        if (!ModelState.IsValid) { return BadRequest(ModelState); } //400
+        if (!ModelState.IsValid || !await team.IsValid()) { return BadRequest(ModelState); } //400
         await meerkatContext.SaveChangesAsync();
 
         return CreatedAtAction(nameof(GetTeamById), new { id = team.Id }, Team.ToDto(team)); // 201
@@ -99,4 +100,20 @@ public class TeamController(
 
         return NoContent(); // 204
     }
+
+    // POST: api/Team/addMember
+    [HttpPost("{teamId}/addMember/{email}")]
+    [Authorize]
+    public async Task<IActionResult> AddMemberToTeam(string email, Guid teamId)
+    {
+        var team = await meerkatContext.Teams.FindAsync(teamId);
+        if (team == null) return BadRequest(); //400
+        var member = await meerkatContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+        if (member == null) return BadRequest(); //400
+        if (team.Members == null) team.Members = new List<User>();
+        team.Members.Add(member);
+        await meerkatContext.SaveChangesAsync();
+        return NoContent(); // 204
+    }
+    
 }

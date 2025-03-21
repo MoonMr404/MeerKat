@@ -29,4 +29,10 @@
     <ItemGroup>
       <ProjectReference Include="..\Shared\Shared.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Views\TaskManagementView.axaml.cs">
+        <DependentUpon>TaskManagementView.axaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
 </Project>

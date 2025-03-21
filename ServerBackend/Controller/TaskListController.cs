@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ServerBackend.Data;
 using ServerBackend.Models;
+using ServerBackend.Validators;
 using Shared.Dto;
 
 namespace ServerBackend.Controller;
@@ -45,6 +46,16 @@ public class TaskListController(
         if(taskList == null) return NotFound();
         return Ok(Models.TaskList.ToDto(taskList, nested));
     }
+    
+    [HttpGet("team/{teamId}")]
+    public async Task<ActionResult<TaskListDto>> GetTaskListsById(Guid teamId, [FromQuery] bool nested = false)
+    {
+        var taskListsQuery = NestedTypes(nested);
+
+        var taskLists = taskListsQuery.Where(t => t.TeamId == teamId).Select(t => Models.TaskList.ToDto(t, nested)).ToList();
+        if(taskLists == null) return NotFound();
+        return Ok(taskLists); //200
+    }
 
     // POST: api/TaskList
     [HttpPost]
@@ -55,7 +66,7 @@ public class TaskListController(
 
         taskList.Team = team;
 
-        if (!ModelState.IsValid) {return BadRequest(ModelState); } //400
+        if (!ModelState.IsValid || !await taskList.IsValid()) {return BadRequest(ModelState); } //400
         meerkatContext.TaskList.Add(taskList);
         await meerkatContext.SaveChangesAsync();
         
@@ -68,7 +79,7 @@ public class TaskListController(
     {
 
         meerkatContext.TaskList.Update(taskList);
-        if (!ModelState.IsValid) { return BadRequest(ModelState); } //400
+        if (!ModelState.IsValid || !await taskList.IsValid()) { return BadRequest(ModelState); } //400
         await meerkatContext.SaveChangesAsync();
 
         return CreatedAtAction(nameof(GetTaskListById), new { id = taskList.Id }, TaskList.ToDto(taskList)); // 201

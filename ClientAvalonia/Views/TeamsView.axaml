@@ -21,25 +21,49 @@
                 <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" CornerRadius="5" Width="120" Height="20" BorderThickness="0" Background="#9B71E1" BoxShadow="2 2 2 2 Black">
                     <TextBlock HorizontalAlignment="Center" Foreground="#523681">I tuoi Team</TextBlock>
                 </Border>
-           
-                <ListBox Margin="0 40 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding TeamList2}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type vm:TeamTemplate}">
-                            <StackPanel Orientation="Horizontal">
-                            <Border Height="40" Width="750" Background="#9B71E1" CornerRadius="10">
-                                <StackPanel Spacing="10" Orientation="Horizontal">
-                                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding team.Name}"></TextBlock>
-                                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding team.Description}"></TextBlock>
+                <Grid
+                    ColumnDefinitions="Auto, Auto">
+                    <ListBox Margin="0 40 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding managedTeamsList}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:TeamTemplate}">
+                                <StackPanel Orientation="Horizontal">
+                                <Border Height="40" Width="750" Background="#9B71E1" CornerRadius="10">
+                                    <StackPanel Spacing="10" Orientation="Horizontal">
+                                        <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding team.Name}"></TextBlock>
+                                        <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding team.Description}"></TextBlock>
+                                    </StackPanel>
+                                </Border>
+                                    <Button VerticalAlignment="Center" Height="40" Width="50" Foreground=  "#523681" Background="#9B71E1" CornerRadius="10" Command="{Binding selectTeamCommand}">
+                                        <PathIcon Data="{StaticResource linehorizontal3regular}"/>
+                                    </Button>
+                                    <Button VerticalAlignment="Center" Height="40" Width="50" Foreground=  "#523681" Background="#9B71E1" CornerRadius="10" Command="{Binding editTeamCommand}">
+                                        <PathIcon Data="{StaticResource editregular}"/>
+                                    </Button>
                                 </StackPanel>
-                            </Border>
-                                <Button VerticalAlignment="Center" Height="40" Width="50" Foreground=  "#523681" Background="#9B71E1" CornerRadius="10" Command="{Binding editTeamCommand}">
-                                    <PathIcon Data="{StaticResource editregular}"/>
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <ListBox Grid.Column="1" Margin="0 40 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding memberOfTeamsList}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:TeamTemplate}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Height="40" Width="750" Background="#9B71E1" CornerRadius="10">
+                                        <StackPanel Spacing="10" Orientation="Horizontal">
+                                            <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding team.Name}"></TextBlock>
+                                            <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding team.Description}"></TextBlock>
+                                        </StackPanel>
+                                    </Border>
+                                    <Button VerticalAlignment="Center" Height="40" Width="50" Foreground=  "#523681" Background="#9B71E1" CornerRadius="10" Command="{Binding selectTeamCommand}">
+                                        <PathIcon Data="{StaticResource linehorizontal3regular}"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
                 
+                <Button VerticalAlignment="Center" Height="50" Width="50" Foreground=  "#523681" Background="#9B71E1" CornerRadius="10" Command="{Binding addTeamCommand}">
+                </Button>
             </Panel> 
         </Border>
     </Panel>

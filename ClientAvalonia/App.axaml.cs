@@ -11,6 +11,7 @@ using ClientAvalonia.Services;
 using ClientAvalonia.ViewModels;
 using ClientAvalonia.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Shared.Dto;
 using SixLabors.ImageSharp.ColorSpaces.Conversion;
 using Splat;
 
@@ -32,6 +33,9 @@ public partial class App : Application
         string apiUrl = "http://localhost:5149";
         
         Locator.CurrentMutable.Register(() => new UserService(client,apiUrl), typeof(UserService));
+        Locator.CurrentMutable.Register(() => new TeamService(client,apiUrl), typeof(TeamService));
+        Locator.CurrentMutable.Register(() => new TaskService(client,apiUrl), typeof(TaskService));
+        Locator.CurrentMutable.Register(() => new TaskListService(client,apiUrl), typeof(TaskListService));
     }
 
     public override async void OnFrameworkInitializationCompleted()

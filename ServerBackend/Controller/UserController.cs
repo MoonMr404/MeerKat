@@ -77,7 +77,7 @@ public class UserController(
     public async Task<ActionResult<UserDto>> CreateUser([FromBody] User user) //Register
     {
         if (!ModelState.IsValid || !(await user.IsValid(meerkatContext))) { return BadRequest(ModelState); } //400
-        user.Password = HashingHelper.Hash(user.Password);
+        user.Password = Helpers.HashingHelper.Hash(user.Password);
 
         meerkatContext.Users.Add(user);
         
@@ -91,7 +91,7 @@ public class UserController(
     public async Task<IActionResult> UpdateUser([FromBody] User user)
     {
         if (!JwtHelper.IsAmongSelf(HttpContext.User,user.Id) && !JwtHelper.IsAdmin(HttpContext.User)) return Unauthorized();
-        user.Password = HashingHelper.Hash(user.Password);
+        user.Password = Helpers.HashingHelper.Hash(user.Password);
         
         meerkatContext.Users.Update(user);
         if (!ModelState.IsValid || !(await user.IsValid(meerkatContext))) { return BadRequest(ModelState); } //400
@@ -128,7 +128,7 @@ public class UserController(
         Console.WriteLine($"Email: {loggedUser.Email} | Password: {loggedUser.Password}");
         
         // Verify the input password against the stored hash
-        if (!HashingHelper.Verify(request.Password, loggedUser.Password))
+        if (!Helpers.HashingHelper.Verify(request.Password, loggedUser.Password))
             return Unauthorized(); // 401
         
         

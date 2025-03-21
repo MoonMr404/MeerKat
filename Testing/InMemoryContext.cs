@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServerBackend.Data;
 
-namespace UnitTesting;
+namespace Testing;
 
 public class InMemoryContext
 {

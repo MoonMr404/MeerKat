@@ -4,73 +4,226 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices.JavaScript;
+using System.Threading.Tasks;
+using Avalonia.Controls;
+using ClientAvalonia.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Shared.Dto;
+using Splat;
 
 namespace ClientAvalonia.ViewModels;
 
-public partial class TaskManagementViewModel : ViewModelBase
-{
-    
- 
-    public ObservableCollection<TaskDto> taskList { get; set; } = new();
+public partial class TaskManagementViewModel : ViewModelBase {
     public ObservableCollection<TaskListTemplate> taskListList { get; set; } = new();
+    public ObservableCollection<UserTemplate> membersList { get; set; } = new();
     
+    private UserService _userService;
+    private TaskService _taskService;
+    private TaskListService _taskListService;
+    private UserDto _userDto;
+    [ObservableProperty] public MainWindowViewModel _mainWindowViewModel;
     
-    public static ObservableCollection<TaskDto> taskList2 { get; set; } = new()
+    [ObservableProperty] private string _taskListName;
+    [ObservableProperty] private string _taskListDescription;
+    [ObservableProperty] private bool _taskListPopupEnabled;
+    [ObservableProperty] private string _taskName;
+    [ObservableProperty] private string _taskDescription;
+    [ObservableProperty] private DateOnly _taskDeadline;
+    [ObservableProperty] public bool _taskPopupEnabled;
+    [ObservableProperty] private bool _isLeader;
+    
+    public TaskListDto _selectedTaskListDto;
+
+    public TaskManagementViewModel(MainWindowViewModel mainWindowViewModel)
     {
-        new TaskDto(){ Id = new Guid(), Name = "Task 1", Description = "task d'esempio numero 1", TaskListId = new Guid(), Deadline = DateOnly.MaxValue},
-        new TaskDto(){ Id = new Guid(), Name = "Task 2", Description = "task d'esempio numero 2", TaskListId = new Guid(), Deadline = DateOnly.MaxValue},
-    };
+        _userService = Locator.Current.GetService<UserService>() ?? throw new InvalidOperationException();
+        _taskService = Locator.Current.GetService<TaskService>() ?? throw new InvalidOperationException();
+        _taskListService = Locator.Current.GetService<TaskListService>() ?? throw new InvalidOperationException();
+        this._mainWindowViewModel = mainWindowViewModel;
+        LoadTasksAsync();
+        LoadMembersAsync();
+    }
     
-    public ObservableCollection<TaskListTemplate> taskListList2 { get; set; } = new()
+    
+
+    public async Task LoadUsersAsync()
     {
-        new TaskListTemplate(new TaskListDto()
-            { Id = new Guid(), Name = "Tasklist 1", Description = "Lista di task numero 1", TeamId = Guid.NewGuid(), Tasks = taskList2}),
-        new TaskListTemplate(new TaskListDto()
-            { Id = new Guid(), Name = "Tasklist 2", Description = "Lista di task numero 2", TeamId = Guid.NewGuid(), Tasks = null}),
-    };
+        _userService.GetUserSelfAsync(true);
+        var user= await _userService.GetUserSelfAsync(true);
+        _userDto = user;
+    }
     
+    public async Task LoadTasksAsync()
+    {
+        await LoadUsersAsync();
+        var taskLists = await _taskListService.GetTaskListByTeamAsync(_mainWindowViewModel.SelectedTeam.Id, true);
+        IsLeader = _mainWindowViewModel.SelectedTeam.ManagerId == _userDto.Id;
+        
+        Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            taskListList.Clear();
+            foreach (TaskListDto taskList in taskLists)
+            {
+                taskListList.Add(new TaskListTemplate(taskList, this));
+            }
+        });
+    } 
+    
+    public async Task LoadMembersAsync()
+    {
+        Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            membersList.Clear();
+            foreach (UserDto user in _mainWindowViewModel.SelectedTeam.Members)
+            {
+                membersList.Add(new UserTemplate(user));
+            }
+        });
+    } 
+    
+    [RelayCommand]
+    public async void createTaskList()
+    {
+        var taskListDto = new TaskListDto()
+        {
+            Id = Guid.Empty,
+            Name = _taskListName,
+            Description = _taskListDescription,
+            TeamId = _mainWindowViewModel.SelectedTeam.Id
+        };
+        try
+        {
+            await _taskListService.CreateTaskListAsync(taskListDto);
+            await LoadTasksAsync();
+            TaskListPopupEnabled = false;
+        }
+        catch (Exception ex)
+        {
+            
+        }
+    }
+    
+    [RelayCommand]
+    public async void createTask()
+    {
+        var task = new TaskDto()
+        {
+            Id = Guid.Empty,
+            Name = TaskName,
+            Description = TaskDescription,
+            Deadline = TaskDeadline,
+            Status = "Da completare",
+            TaskListId = _selectedTaskListDto.Id
+        };
+        try
+        {
+            await _taskService.CreateTaskAsync(task);
+            await LoadTasksAsync();
+            TaskPopupEnabled = false;
+        }
+        catch (Exception ex)
+        {
+            
+        }
+    }
 }
 
 public partial class TaskListTemplate : ObservableObject
 {
-    public TaskListDto taskLists { get; }
+    public TaskListDto taskList { get; }
     public ObservableCollection<TaskTemplate> taskTemplates { get; set; } = new();
+    private TaskListService _taskListService;
+    private TaskManagementViewModel _taskManagementViewModel;
  
-    public TaskListTemplate(TaskListDto taskLists)
+    public TaskListTemplate(TaskListDto taskList, TaskManagementViewModel taskManagementViewModel)
     {
-        this.taskLists = taskLists;
-        if (taskLists.Tasks != null)
+        _taskListService = Locator.Current.GetService<TaskListService>() ?? throw new InvalidOperationException();
+        _taskManagementViewModel = taskManagementViewModel;
+        this.taskList = taskList;
+        if (taskList.Tasks != null)
         {
-            foreach (TaskDto task in taskLists.Tasks)
+            var tasksOrdered = taskList.Tasks.OrderBy(t => t.Status);
+            foreach (TaskDto task in tasksOrdered)
             {
-                taskTemplates.Add(new TaskTemplate(task));
+                taskTemplates.Add(new TaskTemplate(task,_taskManagementViewModel));
             }
         }
     }
     
     [RelayCommand]
-    public void editTaskList()
+    public void addTask()
     {
-      
+        _taskManagementViewModel._selectedTaskListDto = taskList;
+        _taskManagementViewModel.TaskPopupEnabled = true;
     }
     
+    [RelayCommand]
+    public async void deleteTaskList()
+    {
+        await _taskListService.DeleteTaskListAsync(taskList.Id);
+        await _taskManagementViewModel.LoadTasksAsync();
+    }
 }
 
 public partial class TaskTemplate : ObservableObject
 {
     public TaskDto task { get; }
-    public TaskTemplate(TaskDto task)
+    public String IsChecked { get; private set; }
+    public bool IsEnabled { get; private set; }
+    
+    private TaskService _taskService;
+    private TaskManagementViewModel _taskManagementViewModel;
+    public TaskTemplate(TaskDto task, TaskManagementViewModel taskManagementViewModel)
     {
         this.task  = task;
+        _taskService = Locator.Current.GetService<TaskService>() ?? throw new InvalidOperationException();
+        _taskManagementViewModel = taskManagementViewModel;
+
+        switch (task.Status)
+        {
+            case "Da completare":
+                IsEnabled = true;
+                IsChecked = "False";
+                break;
+            case "Consegnata":
+                IsEnabled = false;
+                IsChecked = "True";
+                break;
+            case "Consegnata in ritardo":
+                IsEnabled = false;
+                IsChecked = "{x:Null}";
+                break;
+        }
+    }
+
+    [RelayCommand]
+    public async void completeTask()
+    {
+        await _taskService.CompleteTaskAsync(task.Id);
+        await _taskManagementViewModel.LoadTasksAsync();
     }
     
     [RelayCommand]
     public void editTask()
     {
       
+    }
+    
+}
+
+public partial class UserTemplate : ObservableObject
+{
+    public UserDto user { get; }
+    public UserTemplate(UserDto user)
+    {
+        this.user = user;
+    }
+    
+    [RelayCommand]
+    public void toggleDeleteMember()
+    {
+        
     }
     
 }

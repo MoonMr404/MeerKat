@@ -14,64 +14,235 @@
     </Design.DataContext>
     
     <Panel>
-        <Border VerticalAlignment="Stretch" Background="Transparent" BackgroundSizing="CenterBorder" CornerRadius="10" BoxShadow="2 2 2 2 Black">
-            <Panel> 
-                <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" CornerRadius="5" Width="120" Height="20" BorderThickness="0" Background="#9B71E1" BoxShadow="2 2 2 2 Black">
-                     <TextBlock HorizontalAlignment="Center" Foreground="#523681">Gestione Task</TextBlock>
-                </Border>
-        
-                 <Panel Width="675" Height="450" Background="Transparent">
-                     <ListBox Margin="0 40 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding taskListList2}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" >
-                        
-                         <ListBox.ItemsPanel>
-                             <ItemsPanelTemplate>
-                                 <StackPanel Orientation="Horizontal" />
-                             </ItemsPanelTemplate>
-                         </ListBox.ItemsPanel>
-                         
-                         <ListBox.ItemTemplate>
-                         <DataTemplate DataType="{x:Type vm:TaskListTemplate}">
-                            <StackPanel Orientation="Horizontal">
+        <Grid RowDefinitions="Auto, *">
+            <Border Grid.Row="1" VerticalAlignment="Stretch" Background="Transparent" BackgroundSizing="CenterBorder" CornerRadius="10" BoxShadow="2 2 2 2 Black">
+                <Panel> 
+                    <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" CornerRadius="5" Width="120" Height="20" BorderThickness="0" Background="#9B71E1" BoxShadow="2 2 2 2 Black">
+                         <TextBlock HorizontalAlignment="Center" Foreground="#523681">Gestione Task</TextBlock>
+                    </Border>
+            
+                     <Panel Background="Transparent">
+                         <ListBox WrapSelection="True" Margin="0 40 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding taskListList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" >
                             
-                                <Border MinHeight="190"  MaxHeight="400" Width="170" Background="#9B71E1" CornerRadius="10">
-                                    <StackPanel  MinHeight="190"  MaxHeight="400" Width="170" Spacing="10" Orientation="Vertical">
-                                            <StackPanel Width="170" Spacing="10" Orientation="Horizontal">
-                                                <TextBlock Margin="5 0 0 0" Foreground="#523681" Text="{Binding taskLists.Name}"/>
-                                                <Button Background="#523681" Margin="64 2 3 2" Padding="5 5 5 5" HorizontalAlignment="Left">
-                                                    <PathIcon Height="10" Width="10"  Data="{StaticResource addregular}"></PathIcon>
-                                                </Button>  
-                                            </StackPanel>
-                                        
-                                        <TextBlock Margin="1 0 0 0" Foreground="#523681"   Text="{Binding taskLists.Description}"/>
-                                        
-                                        <ListBox Margin="0 10 0 0" BorderBrush="#523681" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding  taskTemplates}">
-                                            <ListBox.ItemTemplate>
-                                                <DataTemplate DataType="{x:Type vm:TaskTemplate}">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Border Height="40" MinWidth="120" MaxWidth="170" Padding="0 0 10 0" Background="#523681" CornerRadius="5" Margin="0 0 0 0">
-                                                            <StackPanel Orientation="Horizontal" Spacing="15">
-                                                                <TextBlock VerticalAlignment="Center" Margin="5 0 0 0" Foreground="White" Text="{Binding task.Name}"/>
-                                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5 0 0 0" Foreground="#9B71E1" Height="10" Text="{Binding task.Deadline}"/>
-                                                            </StackPanel>
-                                                        </Border>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </ListBox.ItemTemplate>
-                                        </ListBox>
-                                        
-                                    </StackPanel>
-                                </Border>
-                            </StackPanel>
-                         </DataTemplate>
-                     </ListBox.ItemTemplate>
-                    </ListBox>
+                             <ListBox.ItemsPanel>
+                                 <ItemsPanelTemplate>
+                                     <WrapPanel Orientation="Horizontal" />
+                                 </ItemsPanelTemplate>
+                             </ListBox.ItemsPanel>
+                             
+                             <ListBox.ItemTemplate>
+                             <DataTemplate DataType="{x:Type vm:TaskListTemplate}">
+                                <StackPanel Orientation="Horizontal">
+                                
+                                    <Border  Background="#9B71E1" CornerRadius="10">
+                                        <StackPanel  Spacing="10" Orientation="Vertical">
+                                                <Grid ColumnDefinitions="*,Auto,Auto">
+                                                    <TextBlock Margin="5 0 0 0" Foreground="#523681" Text="{Binding taskList.Name}"/>
+                                                    <Button Grid.Column="1" Command="{Binding addTaskCommand}" IsVisible="{Binding IsLeader, RelativeSource={RelativeSource AncestorType=vm:TaskManagementViewModel}}" IsEnabled="{Binding IsLeader, RelativeSource={RelativeSource AncestorType=vm:TaskManagementViewModel}}" Background="#523681" Margin="64 2 3 2" Padding="5 5 5 5" HorizontalAlignment="Left">
+                                                        <PathIcon Height="10" Width="10"  Data="{StaticResource addregular}"></PathIcon>
+                                                    </Button>
+                                                    <Button Grid.Column="2" Command="{Binding deleteTaskListCommand}" IsVisible="{Binding IsLeader, RelativeSource={RelativeSource AncestorType=vm:TaskManagementViewModel}}" IsEnabled="{Binding IsLeader, RelativeSource={RelativeSource AncestorType=vm:TaskManagementViewModel}}" Background="#523681" Margin="64 2 3 2" Padding="5 5 5 5" HorizontalAlignment="Left">
+                                                        <PathIcon Height="10" Width="10"  Data="{StaticResource deleteregular}"></PathIcon>
+                                                    </Button>  
+                                                </Grid>
+                                            
+                                            <TextBlock Margin="1 0 0 0" Foreground="#523681"   Text="{Binding taskList.Description}"/>
+                                            
+                                            <ListBox Margin="0 10 0 0" BorderBrush="#523681" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding  taskTemplates}">
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate DataType="{x:Type vm:TaskTemplate}">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Border Height="40" MinWidth="120" MaxWidth="230" Padding="0 0 10 0" Background="#523681" CornerRadius="5" Margin="0 0 0 0">
+                                                                <StackPanel Orientation="Horizontal" Spacing="7">
+                                                                    <CheckBox Margin="7 0 0 0" IsThreeState="True" IsHitTestVisible="{Binding IsEnabled}" IsChecked="{Binding IsChecked}" Command="{Binding completeTaskCommand}"></CheckBox>
+                                                                    <TextBlock VerticalAlignment="Center" Margin="5 0 0 0" Foreground="White" Text="{Binding task.Name}"/>
+                                                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5 0 0 0" Foreground="#9B71E1" Height="10" Text="{Binding task.Deadline}"/>
+                                                                </StackPanel>
+                                                            </Border>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                            
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                             </DataTemplate>
+                         </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Panel>
+                    
+                    <Button Name="CreateTaskListButton" CornerRadius="10" Background="#9B71E1" Margin="0 2 3 2" Padding="10 10 10 10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                        <PathIcon Height="25" Width="25"  Data="{StaticResource addregular}"></PathIcon>
+                    </Button>  
                 </Panel>
+            </Border>
+            <Border Grid.Row="0" Background="#4C4C4C" Width="675" Height="450" CornerRadius="10" BoxShadow="5 5 5 5 Black">
+                <Panel Width="675" Height="450" Background="Transparent">
+                  <StackPanel Orientation="Vertical" Background="Transparent" Margin="20 10 0 0">
+                    
+                    <TextBlock Text="Nome:" Foreground="#313131" Background="Transparent"/>   
+                    <StackPanel Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
+                        <TextBox Width="230" VerticalAlignment="Center"  Text="{Binding MainWindowViewModel.SelectedTeam.Name}"  BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" />
+                            <Button 
+                                VerticalAlignment="Center"
+                                Background="Transparent" 
+                                Margin="2 4 0 5"
+                                > 
+                                <PathIcon Data="{StaticResource editregular}"></PathIcon>
+                            </Button>   
+                    </StackPanel>
+                    
+                    <TextBlock Text="Descrizione:" Foreground="#313131" Background="Transparent"/>
+                    <StackPanel Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
+                        <TextBox MinHeight="100" MaxHeight="300" Width="230" VerticalAlignment="Center" Text="{Binding MainWindowViewModel.SelectedTeam.Description}"  BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" />
+                        <Button 
+                            VerticalAlignment="Top"
+                            Background="Transparent"
+                            Margin="2 4 2 5"
+                          >  <!-- Command="{Binding }" -->
+                            <PathIcon Data="{StaticResource editregular}"></PathIcon>
+                        </Button>   
+                    </StackPanel>
+                    
+                    <TextBlock Text="Data di Consegna:" Foreground="#313131" Background="Transparent"/>
+                    <StackPanel Orientation="Horizontal" Background="Transparent" Margin="0 0 0 15">
+                        <CalendarDatePicker Width="230" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" />
+                        <Button 
+                            VerticalAlignment="Center"
+                            Background="Transparent" 
+                            Margin="2 4 2 5"
+                            > 
+                            <PathIcon Data="{StaticResource editregular}"></PathIcon>
+                        </Button>   
+                    </StackPanel>
+                    
+                 </StackPanel>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="10 10 150 10">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock  Text="Membri del team" Foreground="#313131" Background="Transparent" VerticalAlignment="Center"/>
+                        
+                        <Button Background="Transparent" Margin="20 2 2 2" HorizontalAlignment="Right" > 
+                            <PathIcon Height="10" Width="10" Data="{StaticResource addregular}"></PathIcon>
+                        </Button>   
+                        </StackPanel>
+                        
+                        <ListBox Margin="0 40 0 0" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" ItemsSource="{Binding membersList}" >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:UserTemplate}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Height="30" Width="150" Background="#9B71E1" CornerRadius="10">
+                                            <StackPanel Spacing="4" Orientation="Horizontal">
+                                                
+                                                <TextBlock Margin="0 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding user.Name}"/>
+                                                <TextBlock Margin="0 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding user.Surname}"/>
+                                                <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Foreground="#523681" Text="{Binding user.Email}"/>
+                                                
+                                                <Button Background="Transparent"  Margin="5 2 2 2" Padding="3 0 3 0" HorizontalAlignment="Right" Command="{Binding toggleDeleteMemberCommand}">
+                                                     <PathIcon Height="10" Width="10"  Data="{StaticResource deleteregular}"></PathIcon>
+                                                </Button>   
+                                                
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        
+                    </StackPanel>
+                    
+                    <Button 
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right"
+                        Background="#523681" 
+                        Margin="2 4 10 10"
+                        >  
+                        Salva
+                    </Button>   
+                    
+                </Panel>
+            </Border>
+        </Grid>
+        
+        <Popup Name="CreateTaskList" IsOpen="{Binding TaskListPopupEnabled, Mode=TwoWay}" Placement="Center">
+            <Panel>
+                <Border Background="#4C4C4C" Width="375" Height="300" CornerRadius="10" BoxShadow="5 5 5 5 Black">
+                    <StackPanel Orientation="Vertical" Background="Transparent" Spacing="20">
+                        <!-- <Image Source="" ></Image> da usare comn un immagine effettiva -->
+                        <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0" Foreground="#9B71E1" FontSize="20"> Crea Una Nuova TaskList</TextBlock>
                 
-                <Button  CornerRadius="10" Background="#9B71E1" Margin="0 2 3 2" Padding="10 10 10 10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                    <PathIcon Height="25" Width="25"  Data="{StaticResource addregular}"></PathIcon>
-                </Button>  
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock> Nome:</TextBlock>
+                            <TextBox Width="230" Name="PuTlNameBox" Text="{Binding TaskListName, Mode=TwoWay}" VerticalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock> Descrizione:</TextBlock>
+                            <TextBox Width="230"  Height="70" Text="{Binding TaskListDescription, Mode=TwoWay}" TextWrapping="Wrap" Name="PuTlDescriptionBox" VerticalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" />
+                        </StackPanel>
+                
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button 
+                                Name="PuTlCancelButton"
+                                Background="#523681"
+                                Margin="0 0 50 0">
+                                Annulla
+                            </Button>   
+                            <Button 
+                                Name="PuTlSaveButton"
+                                Command="{Binding createTaskListCommand}"
+                                Background="#523681"
+                                Margin="0 0 50 0"> 
+                                Salva
+                            </Button>   
+                        </StackPanel>
+                
+                    </StackPanel>
+                </Border>
             </Panel>
-        </Border>
+        </Popup>
+        <Popup Name="CreateTask" IsOpen="{Binding TaskPopupEnabled, Mode=TwoWay}" Placement="Center">
+            <Panel>
+                <Border Background="#4C4C4C" Width="375" Height="360" CornerRadius="10" BoxShadow="5 5 5 5 Black">
+                    <StackPanel Orientation="Vertical" Background="Transparent" Spacing="20">
+                        <!-- <Image Source="" ></Image> da usare comn un immagine effettiva -->
+                        <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0" Foreground="#9B71E1" FontSize="20"> Crea Una Nuova Task</TextBlock>
+                
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock> Nome:</TextBlock>
+                            <TextBox Width="230" Name="PuTNameBox" Text="{Binding TaskName, Mode=TwoWay}" VerticalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock> Descrizione:</TextBlock>
+                            <TextBox Width="230"  Height="70" TextWrapping="Wrap" Name="PuTDescriptionBox" Text="{Binding TaskDescription, Mode=TwoWay}" VerticalAlignment="Center" BorderBrush="#313131" BorderThickness="1" Background="#313131" HorizontalAlignment="Center" />
+                        </StackPanel>
+                        
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock> Deadline:</TextBlock>
+                            <CalendarDatePicker Width="230" Name="PuTDatePicker" Text="{Binding TaskDeadline, Mode=TwoWay}"></CalendarDatePicker>
+                        </StackPanel>
+                
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button 
+                                Name="PuTCancelButton"
+                                Background="#523681"
+                                Margin="0 0 50 0">
+                                Annulla
+                            </Button>   
+                            <Button 
+                                Name="PuTSaveButton"
+                                Command="{Binding createTaskCommand}"
+                                Background="#523681"
+                                Margin="0 0 50 0"> 
+                                Salva
+                            </Button>   
+                        </StackPanel>
+                
+                    </StackPanel>
+                </Border>
+            </Panel>
+        </Popup>
     </Panel>
 </UserControl>
 

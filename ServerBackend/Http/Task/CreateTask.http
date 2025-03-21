@@ -1,0 +1,11 @@
+﻿POST {{url}}/api/Task
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "name" : "Finire la cucina",
+  "description" : "Importantissima logistica",
+  "deadline" : "2025-03-22",
+  "status" : "Da completare",
+  "taskListId" : "3ac188f5-27c2-4222-94e4-46d8dd789c6e"
+}
