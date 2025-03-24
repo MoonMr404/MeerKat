@@ -1,0 +1,69 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:ClientAvalonia.ViewModels"
+             mc:Ignorable="d"
+             x:Class="ClientAvalonia.Views.ChatView"
+             x:DataType="viewModels:ChatViewModel">
+    
+    <Design.DataContext>
+        <viewModels:ChatViewModel />
+    </Design.DataContext>
+    
+    <Grid Margin="10" Width="800" Height="600">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/> <!-- Per la lista degli utenti -->
+            <ColumnDefinition Width="*"/>    <!-- Per la lista dei messaggi e l'area di input -->
+        </Grid.ColumnDefinitions>
+        
+        <!-- Lista utenti -->
+        <ListBox ItemsSource="{Binding Userchat.Keys }"
+                 x:Name="UserList"
+                 Height="500"
+                 Width="230"
+                 Margin="10"
+                 VerticalAlignment="Top"
+                 HorizontalAlignment="Left"
+                 SelectionChanged="OnUserSelected"
+                 >
+                
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding }" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <!-- Area per i messaggi -->
+        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10">
+            <ListBox ItemsSource="{Binding Messages}" 
+                     x:Name="MessagesList" 
+                     Height="400" 
+                     Margin="0,0,0,10">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <!-- Casella di input e pulsante "Invia" -->
+            <DockPanel LastChildFill="True">
+                <TextBox x:Name="MessageTextBox"
+                         Text="{Binding MessageText, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalContentAlignment="Center"
+                         Height="30"
+                         Watermark="Scrivi un messaggio..."
+                         Margin="0,0,10,0"
+                         DockPanel.Dock="Left"
+                         KeyDown="OnMessageTextBoxKeyDown" />
+                <Button Content="Invia"
+                        Height="30"
+                        Width="80"
+                        Click="OnSendClick"
+                        DockPanel.Dock="Right"/>
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -10,6 +10,8 @@
         <entry key="ClientAvalonia/Views/AuthentificationWindow.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/CreateTaskListView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/CreateTaskView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
+        <entry key="ClientAvalonia/Views/ChatView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
+        <entry key="ClientAvalonia/Views/ChatWindowView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/EditTeamView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/InfoTeamView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />
         <entry key="ClientAvalonia/Views/LoginView.axaml" value="ClientAvalonia/ClientAvalonia.csproj" />

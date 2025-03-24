@@ -32,6 +32,8 @@ public partial class MainWindowViewModel : ViewModelBase
           new PageListTemplate(typeof(UserViewModel), "personregular"),
           new PageListTemplate(typeof(TeamsViewModel), "peoplecommunityregular"),
           new PageListTemplate(typeof(TaskManagementViewModel), "peoplecommunityregular", false)
+          new PageListTemplate(typeof(TeamsViewModel), "peoplecommunityregular"),
+          new PageListTemplate(typeof(ChatViewModel), "chat_regular")
      };
      
      partial void OnSelectedListItemChanged(PageListTemplate? value)
